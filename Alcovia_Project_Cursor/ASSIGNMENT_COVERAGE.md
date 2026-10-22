@@ -18,7 +18,7 @@ The sample-data validator passes its defined checks. Dashboard interactions and 
 
 All student, campaign, payment, and activity records are fictional. The dashboards are prototypes, the automation workflows are documented rather than live, and there is no production database, authentication, or live integration with Alcovia systems.
 
-Before production use, the priority is to reconcile data and metric inconsistencies, validate the main student and advisor journeys, review privacy and access controls, and implement and test the required integrations and automation.
+Before production use, the priority is to reconcile any remaining data and metric inconsistencies, validate the main student and advisor journeys, review privacy and access controls, and implement and test the required integrations and automation.
 
 ---
 
@@ -62,7 +62,7 @@ Before production use, the priority is to reconcile data and metric inconsistenc
 | **Career milestones** | ✅ **Implemented** | e.g., "Research apprenticeships", "Attend engineering open day", "Prepare CV" (6 total). |
 | **Personal milestones** | ✅ **Implemented** | e.g., "Establish study routine", "Improve sleep", "Regular exercise" (6 total). |
 | **Dashboard display** | ✅ **Implemented** | "Personal development" tab shows milestones table with target date, status, completion date. |
-| **Overdue flag** | ⚠️ **Needs data reconciliation** | `MIL-005` (STU-002, “Attend engineering open day”) is marked `Overdue`, but its target date is 2026-11-05, after the 2026-10-22 prototype as-of date. Correct the sample date or status, then verify the Home-screen alert. |
+| **Overdue flag** | ✅ **Reconciled in sample data** | `MIL-005` (STU-002, “Attend engineering open day”) has target date 2026-10-15, before the 2026-10-22 prototype as-of date, and remains `Overdue`. The student dashboard displays the overdue alert from the milestone status. |
 | **Clearly fictional** | ✅ **Implemented** | All rows have "Fictional sample" label in notes. |
 
 #### B.2 Focus Time & Study Habits
@@ -200,7 +200,7 @@ Before production use, the priority is to reconcile data and metric inconsistenc
 | Area | Requirement | Status |
 |------|-------------|--------|
 | **A. Chapter readiness** | 5-stage breakdown, missing = unavailable, test all scenarios | ✅ **Complete** |
-| **B.1 Personal development** | Milestones (academic/career/personal), sample data, dashboard | ⚠️ **Implemented; one sample status needs reconciliation** |
+| **B.1 Personal development** | Milestones (academic/career/personal), sample data, dashboard | ✅ **Implemented; overdue sample reconciled** |
 | **B.2 Study habits** | Focus time, streaks, session length, environment, sample data | ✅ **Complete** |
 | **B.3 Wellness** | Active minutes, sleep, stress, mood, consent-aware, fictional labeled | ✅ **Complete** |
 | **B.4 Extracurriculars** | Tutoring, sports, clubs, volunteer, frequency, hours, advisor notes | ✅ **Complete** |
@@ -236,8 +236,8 @@ Before production use, the priority is to reconcile data and metric inconsistenc
 
 ## Prioritised Next Steps
 
-1. **Reconcile sample-data exceptions:** Correct the `MIL-005` target-date/status mismatch and recheck the Home-screen overdue alert. Keep the documented invoice/payment mismatch explicitly labelled as an intentional test case.
-2. **Validate KPI definitions and outputs:** Re-run CTR and cost-per-qualified-lead calculations from the campaign source data; preserve the formulas in `docs/METRIC_DEFINITIONS.md`.
+1. **Keep sample-data exceptions documented:** `MIL-005` now has a target date before the 2026-10-22 demo as-of date and remains flagged overdue. Keep the invoice/payment mismatch explicitly labelled as an intentional test case.
+2. **Preserve KPI validation evidence:** For all sample campaign rows, CTR is 5,695 ÷ 210,300 = 2.71% (dashboard display: 2.7%) and cost per ads-qualified lead is ₹104,500 ÷ 144 = ₹725.69 (dashboard display: ₹726). Recheck these outputs if the source data changes.
 3. **Validate key user journeys:** Test chapter readiness, missing-data states, advisor alerts, filters, and student resume logic across the documented scenarios.
 4. **Review privacy and access controls:** Require explicit consent for any real wellness data and define role-based access for students, advisors, GTM, and admins.
 5. **Move from sample files to a live data layer:** Replace static CSV fetches with documented API/database contracts and reconcile Alcovia's actual schema.
