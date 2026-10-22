@@ -1,7 +1,9 @@
 # Automation Workflows · Alcovia Assessment
 
 ## Overview
-This document describes the envisioned automation workflows for the Alcovia student success platform. The prototype includes sample data and dashboard indicators; live automation integration would require n8n configuration and production credentials.
+This document specifies proposed automation workflows for the Alcovia student success platform. The prototype uses fictional CSV data and dashboard indicators only; live notifications, task creation, database updates, and scheduled execution require a production integration (for example, n8n), credentials, and testing.
+
+**Date handling:** Use the prototype's fixed reference date, `AS_OF_DATE = 2026-10-22`, for reproducible date-based examples. In production, use a configured business timezone and the current date/time.
 
 **Note:** This is a fictional assessment prototype. All automation descriptions are for demonstration purposes only.
 
@@ -10,8 +12,8 @@ This document describes the envisioned automation workflows for the Alcovia stud
 ## 1. Overdue Milestone Reminders
 
 ### Trigger
-- **Event:** Milestone status transitions to "Overdue" (target date has passed, status not "Completed")
-- **Data:** `personal_development.csv` — milestone with target_date < today AND status != "Completed"
+- **Event:** A milestone is eligible for an overdue reminder when `target_date` is present, `target_date < AS_OF_DATE`, and its source status is not `Completed`.
+- **Data:** `personal_development.csv`; use the fixed demo reference date above in the prototype. In production, use the configured current date and timezone. A future target date must not be treated as overdue solely because its source status says `Overdue`.
 - **Frequency:** Daily check (or real-time on updates)
 
 ### Action
@@ -25,14 +27,15 @@ This document describes the envisioned automation workflows for the Alcovia stud
 
 ### Sample Trigger Data (Prototype)
 ```
-STU-002: milestone "Attend engineering open day" (due 2026-11-05)
-        → Status: Overdue, Target: 2026-11-05, Current date: 2026-10-22
-        → Email sent to STU-002 + Advisor 2
+STU-002: milestone "Attend engineering open day" (target date: 2026-10-15)
+        → Source status: Overdue; target date precedes AS_OF_DATE (2026-10-22)
+        → Expected production action: reminder to STU-002 and the assigned advisor
+        → Prototype: no email is sent
 ```
 
 ### Implementation (n8n workflow)
 1. **Trigger:** Cron job daily at 06:00 UTC
-2. **Query:** Fetch `personal_development.csv`, filter status="Overdue"
+2. **Query:** Fetch `personal_development.csv`; select records with a present target date before the configured reference date and source status other than `Completed`. De-duplicate reminders by milestone and reminder window.
 3. **Enrich:** Join with `students.csv` and advisor contact details
 4. **Branch:** For each student, construct email
 5. **Notify:** Send via SMTP or Alcovia email service
@@ -55,19 +58,19 @@ STU-002: milestone "Attend engineering open day" (due 2026-11-05)
    - Input type (e.g., "Weekly check-in", "Milestone review")
    - Days overdue
    - Priority: high (>7 days overdue), medium (3–7 days), low (<3 days)
-4. Dashboard alert on student's home view (implemented in prototype)
+4. Dashboard indicator on the student's home view (prototype UI only; it does not send a notification)
 
 ### Sample Trigger Data (Prototype)
 ```
 ADV-007 (STU-004): "Weekly check-in" due 2026-10-20, current date 2026-10-22
-                 → Input status: Missing → 2 days overdue
-                 → Alert sent to Advisor 2
-                 → Dashboard shows on STU-004 home screen
+                 → Input status: Missing; 2 days past due as of 2026-10-22
+                 → Expected production action: notify the assigned advisor
+                 → Prototype: no notification is sent; the dashboard indicator is illustrative
 ```
 
 ### Implementation (n8n workflow)
 1. **Trigger:** Cron job daily at 09:00 UTC (after standup)
-2. **Query:** Fetch `advisor_inputs.csv`, filter due_date < today AND status IN ("Missing", "Overdue")
+2. **Query:** Fetch `advisor_inputs.csv`; select records with a present `due_date < AS_OF_DATE` and `input_status` in `Missing` or `Overdue`, excluding submitted items. Calculate days overdue from the same reference date.
 3. **Enrich:** Calculate days overdue, categorize priority
 4. **Group:** By advisor_id
 5. **Notify:** Send summary email to each advisor
@@ -93,9 +96,10 @@ ADV-007 (STU-004): "Weekly check-in" due 2026-10-20, current date 2026-10-22
 
 ### Sample Trigger Data (Prototype)
 ```
-Student 1 (Lead LD-009): Trial enrolment expires 2026-10-28 (6 days remaining)
-                        → Email sent: "Your trial is ending soon—upgrade now"
-                        → Sales task created for GTM team
+Example only: Lead LD-009 has a trial expiry date of 2026-10-28 (6 days after 2026-10-22).
+                        → Expected production action: send a renewal reminder if the enrolment is still a trial and no upgrade payment is recorded
+                        → Expected production action: create a GTM follow-up task
+                        → Prototype: neither action is executed
 ```
 
 ### Implementation (n8n workflow)
@@ -112,7 +116,7 @@ Student 1 (Lead LD-009): Trial enrolment expires 2026-10-28 (6 days remaining)
 
 ### Trigger
 - **Event:** Student fails stage 3 (Practice ≥70%) or stage 5 (Exam Readiness ≥80%) in a chapter
-- **Data:** `chapter_readiness_stages.csv` — stage with status="Failed" OR (stage_number=3 AND score_pct < 70) OR (stage_number=5 AND score_pct < 80)
+- **Data:** `chapter_readiness_stages.csv` — escalate when a recorded stage status is `Failed`, or a present score is below the threshold for stage 3 (70%) or stage 5 (80%). Missing scores are unknown, not zero; do not infer failure from a blank score alone.
 - **Frequency:** Real-time (on form submission or daily batch)
 
 ### Action
@@ -127,9 +131,9 @@ Student 1 (Lead LD-009): Trial enrolment expires 2026-10-28 (6 days remaining)
 ### Sample Trigger Data (Prototype)
 ```
 STU-002 (CH-MATH-01, Stage 3): Practice score 65% (target ≥70%)
-                              → Status: Failed
-                              → Advisor input created: "Practice remediation needed"
-                              → Email: "You scored 65% on practice—let's review"
+                              → Expected production action: flag the failed stage for advisor review
+                              → Expected production action: create a remediation task and send a supportive message
+                              → Prototype: no task or email is created
 ```
 
 ### Implementation (n8n workflow)
@@ -146,8 +150,8 @@ STU-002 (CH-MATH-01, Stage 3): Practice score 65% (target ≥70%)
 ## 5. Study Habit Consistency Alerts
 
 ### Trigger
-- **Event:** Study streak breaks OR focus time drops below weekly average
-- **Data:** `study_habits.csv` — habit with `study_streak_days < previous_streak` OR `focus_minutes_daily < rolling_average * 0.75`
+- **Event:** A study streak decreases or focus time falls below 75% of the student's baseline.
+- **Data:** `study_habits.csv` must contain dated historical observations. Compare like-for-like periods and define the baseline window (recommended: the previous 7 complete days). A single snapshot cannot establish a trend; if history is insufficient, skip the alert and record “insufficient history.”
 - **Frequency:** Weekly (e.g., Sunday evening)
 
 ### Action
@@ -160,14 +164,14 @@ STU-002 (CH-MATH-01, Stage 3): Practice score 65% (target ≥70%)
 
 ### Sample Trigger Data (Prototype)
 ```
-STU-005: Study streak was 8 days, now 2 days
-        → Email: "Your study streak broke—let's get back on track"
-        → Habit recommendation: Daily 15-minute review
+Illustrative example only: a student's recorded streak decreases from 8 days to 2 days across dated snapshots.
+        → Expected production action: offer a supportive re-engagement suggestion
+        → Prototype: no email is sent; verify historical records exist before evaluating a trend
 ```
 
 ### Implementation (n8n workflow)
 1. **Trigger:** Cron job weekly on Sunday 18:00 UTC
-2. **Query:** Fetch `study_habits.csv` from this week and last week
+2. **Query:** Fetch dated `study_habits.csv` observations for the current and comparison windows; do not compare snapshots without valid dates.
 3. **Compare:** Calculate streak delta, focus-time delta
 4. **Filter:** Where delta < threshold
 5. **Enrich:** Join `personal_development.csv` to see if any milestones are at risk
@@ -179,8 +183,8 @@ STU-005: Study streak was 8 days, now 2 days
 ## 6. Wellness Check-in Escalations
 
 ### Trigger
-- **Event:** Stress level "High" + sleep < 6 hours for 3+ consecutive days OR mood rating < 2 for 2+ consecutive days
-- **Data:** `wellness_tracking.csv` — wellness with `stress_level="High"` AND `sleep_hours < 6` repeatedly
+- **Event:** Either (a) high stress and sleep below 6 hours on 3 consecutive dated days, or (b) mood rating below 2 on 2 consecutive dated days.
+- **Data:** `wellness_tracking.csv` must contain dated history sufficient to verify the relevant consecutive-day pattern. Missing observations break the verified sequence; do not treat missing values as low sleep or poor mood.
 - **Frequency:** Daily
 
 ### Action
@@ -194,10 +198,9 @@ STU-005: Study streak was 8 days, now 2 days
 
 ### Sample Trigger Data (Prototype)
 ```
-STU-002: Stress "High" for 3 days, sleep <6 hours each day
-        → Wellness alert: "We've noticed patterns—let's talk"
-        → Advisor task: Schedule wellness check-in within 48 hours
-        → Email includes counseling/support resources
+Illustrative example only: dated records confirm high stress and sleep below 6 hours for 3 consecutive days.
+        → Expected production action, only with valid consent and appropriate access: offer a private advisor check-in and support resources
+        → Prototype: no wellness message or advisor task is created
 ```
 
 ### Implementation (n8n workflow)
@@ -205,8 +208,8 @@ STU-002: Stress "High" for 3 days, sleep <6 hours each day
 2. **Query:** Fetch `wellness_tracking.csv` for past 7 days
 3. **Aggregate:** By student, rolling 3-day stress/sleep pattern
 4. **Filter:** Where pattern meets escalation criteria
-5. **Validate:** Check student's `wellness_tracking.consent_status` = "Yes" before outreach
-6. **Notify:** Email student + advisor, create task
+5. **Validate:** Verify explicit, current consent for the specific outreach channel and purpose; apply role-based access and minimum-necessary disclosure. If consent is absent, expired, or unclear, do not send outreach.
+6. **Notify:** Use an approved, privacy-preserving channel; share sensitive wellness details only with authorized staff and only when necessary. Create an audit record without copying sensitive details into general-purpose logs.
 7. **Log:** Timestamp in `advisor_inputs.csv` for audit trail
 
 ---
@@ -228,10 +231,10 @@ STU-002: Stress "High" for 3 days, sleep <6 hours each day
 
 ### Sample Trigger Data (Prototype)
 ```
-Campaign CAM-005 (Email nurture): 3 conversions this week
-                                 Cost: ₹8,500 / 3 leads = ₹2,833 CPA
-                                 Target: ₹2,000 CPA → OVER BUDGET
-                                 → Recommendation: Pause and optimize landing page
+Illustrative example only: Campaign CAM-005 (Email nurture) records 3 attributed conversions and ₹8,500 in attributable spend for the same reporting window.
+                                 CPA = ₹8,500 / 3 conversions = ₹2,833 per conversion
+                                 Target CPA: ₹2,000 → above target
+                                 → Recommendation: investigate attribution, sample size, and landing-page performance before changing budget
 ```
 
 ### Implementation (n8n workflow)
@@ -248,8 +251,8 @@ Campaign CAM-005 (Email nurture): 3 conversions this week
 ## 8. Data Quality and Validation Alerts
 
 ### Trigger
-- **Event:** Missing or inconsistent data in student records
-- **Data:** Any CSV row with required fields NULL or referential integrity violations
+- **Event:** Missing or inconsistent data in student records.
+- **Data:** Required fields are blank, dates are invalid, duplicate identifiers exist, or foreign keys do not resolve. Define required fields and severity per dataset; a missing optional field should not automatically block all workflows.
 - **Frequency:** Daily batch validation
 
 ### Action
@@ -265,8 +268,11 @@ Campaign CAM-005 (Email nurture): 3 conversions this week
 
 ### Sample Output (Prototype)
 ```
-Validation passed: 40 chapter_readiness, 18 personal_dev, 6 study_habits, 9 wellness
-Referential checks passed. No orphan records detected.
+Illustrative output format only — not a claim that validation has been run:
+Validation passed: [row counts by dataset]
+Referential checks: [pass/fail summary]
+
+Replace these placeholders with the actual output from `validate_sample_data.py` before reporting a validation result.
 ```
 
 ### Implementation
@@ -279,8 +285,8 @@ Referential checks passed. No orphan records detected.
 
 ## Dashboard Integration
 
-### Real-Time Indicators
-The prototype dashboard displays automation statuses in real-time:
+### Prototype Dashboard Indicators
+The prototype displays sample indicators from local data. These are not guaranteed to update in real time and do not represent live automation execution:
 - **Overdue milestones** (red alert on home screen)
 - **Missing advisor inputs** (yellow notice on home screen)
 - **Failed chapter stages** (flag on Chapter Readiness tab)
@@ -292,7 +298,7 @@ The prototype dashboard displays automation statuses in real-time:
 │ ⚠️ Action needed:                        │
 │ 1 personal development milestone overdue│
 │ · Attend engineering open day           │
-│   (due 2026-11-05)                      │
+│   (due 2026-10-15)                      │
 │ Advisor review recommended.             │
 └─────────────────────────────────────────┘
 
@@ -345,8 +351,12 @@ To move from prototype to live automation:
 
 ## Notes & Limitations
 
-- **Prototype Status:** This specification describes intended workflows. The current implementation uses fictional sample data and dashboard indicators only.
-- **No Live Automation:** No actual emails, tasks, or database updates occur when using the prototype dashboard. All automation is documented for reference.
+- **Prototype Status:** This specification describes proposed workflows. The prototype uses fictional sample data and dashboard indicators only.
+- **No Live Automation:** No emails, tasks, scheduled jobs, or database updates are executed by the prototype. Examples of production actions are hypothetical until the integrations are built and tested.
+- **Date and status consistency:** Use `AS_OF_DATE = 2026-10-22` for reproducible prototype examples. In production, configure the business timezone and calculate due/overdue state from canonical dates and source status; do not label a future-dated item overdue based on status alone.
+- **Idempotency and reliability:** Production workflows should prevent duplicate notifications, retry transient failures safely, send failures to an observable error queue, and log workflow IDs, timestamps, outcomes, and record IDs without exposing sensitive data.
+- **Data sufficiency:** Trend-based study and wellness alerts require dated history and explicit missing-data handling. Skip evaluation when the required observation window is incomplete.
+- **Campaign measurement:** Compute CPA using attributed spend divided by attributed conversions over the same reporting window. Verify attribution and minimum sample size before recommending budget changes.
 - **Privacy:** Wellness alerts require explicit consent. The prototype marks all wellness data as fictional.
 - **Extensibility:** Each workflow can be triggered by additional conditions (e.g., "and student has tutoring booked", "and goal status = needs review").
 - **Performance:** With thousands of students, consider moving from daily cron jobs to event-driven workflows via n8n webhooks.
@@ -360,4 +370,4 @@ For questions about these workflows or implementation in production:
 - **Engineering:** Alcovia Systems Team
 - **Data:** Alcovia Analytics Team
 
-**Last updated:** 2026-10-22
+**Last updated:** 2026-10-23
