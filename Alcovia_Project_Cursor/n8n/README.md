@@ -6,12 +6,12 @@ These files are **demonstration designs**. They are not connected to Alcovia, Cl
 
 | File | What it does | Credentials needed |
 | --- | --- | --- |
-| `demo_sample_row_validation.json` | Manual trigger → inspect hardcoded fictional payment rows → split valid vs invalid | None |
-| `demo_trial_renewal_queue.json` | Manual trigger → inspect hardcoded fictional trial enrollments due within 21 days of 2026-10-22 | None |
+| `demo_sample_row_validation.json` | Manual trigger → split fictional payment rows → classify rows eligible for collected-revenue reporting vs excluded | None |
+| `demo_trial_renewal_queue.json` | Manual trigger → calculate days to renewal from the fixed demo date (2026-10-22) → queue only active trial enrollments due in 0–21 days | None |
 
-Import in n8n: **Workflows → Import from File**. Then click **Test workflow**. Both workflows use only Manual Trigger, Set, If, and NoOp nodes.
+Import in n8n: **Workflows → Import from File**. Then click **Test workflow**. Both workflows use Manual Trigger, Set, Split Out, If, and NoOp nodes. The workflows are designed for manual testing with fictional records only.
 
-Scheduled production syncs, source-system connectors, and outbound reminders are **not exported**, because they would require secrets and would imply a live integration that does not exist.
+The payment workflow demonstrates basic eligibility checks; it is not a complete schema or reconciliation validator. The renewal workflow queues draft-action metadata only; it does not create a CRM task or send a reminder. Scheduled production syncs, source-system connectors, and outbound reminders are **not exported**, because they require approved access and production configuration.
 
 ## Proposed production workflows (not built)
 
