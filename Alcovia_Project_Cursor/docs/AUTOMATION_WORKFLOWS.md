@@ -363,11 +363,4 @@ To move from prototype to live automation:
 
 ---
 
-## Contact & Support
 
-For questions about these workflows or implementation in production:
-- **Product:** Alcovia Product Team
-- **Engineering:** Alcovia Systems Team
-- **Data:** Alcovia Analytics Team
-
-**Last updated:** 2026-10-23
