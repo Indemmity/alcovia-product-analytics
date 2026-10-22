@@ -1,11 +1,26 @@
 # Assignment Coverage & Validation Notes
 
-**Prototype as-of date:** 2026-10-22  
-**Purpose:** Record assignment coverage, the checks performed against fictional sample data, and the gaps that remain before production use.
+**Prototype as of:** 22 October 2026
 
-> **Scope and validation:** This is a prototype built with fictional records. Dashboard interactions and the sample-data validator have been checked against the documented scenarios; this does not establish production readiness or prove every workflow end to end. The documented automation workflows are not live, and there is no production database, authentication, or live Alcovia integration.
+## Purpose
 
-> **Items to reconcile:** The sample milestone `MIL-005` is marked `Overdue` despite having a target date of 2026-11-05, which is after the prototype as-of date. Correct the source record or status before treating that alert as valid. The CTR and cost-per-qualified-lead figures below are based on campaign-level data and their formulas are stated explicitly.
+This document summarises the assignment requirements covered by the Alcovia prototype, the validation performed using fictional sample data, and the work required before production use.
+
+The prototype brings student progress, chapter readiness, personal development, study habits, advisor follow-ups, and go-to-market metrics into one place. It is designed to help the team identify where students may need support while tracking acquisition, conversion, and revenue performance.
+
+## Implementation and validation
+
+The prototype includes a five-stage chapter-readiness model, personal development and study-habit tracking, optional fictional wellness data, advisor-input alerts, and eight documented automation workflows. The existing go-to-market and student dashboards were checked against defined sample scenarios.
+
+The sample-data validator passes its defined checks. Dashboard interactions and calculations were checked using the prototype's sample data. These checks provide evidence of basic functionality, but they do not establish production readiness or confirm that every workflow has been tested end to end.
+
+## Important limitations and next steps
+
+All student, campaign, payment, and activity records are fictional. The dashboards are prototypes, the automation workflows are documented rather than live, and there is no production database, authentication, or live integration with Alcovia systems.
+
+Before production use, the priority is to reconcile data and metric inconsistencies, validate the main student and advisor journeys, review privacy and access controls, and implement and test the required integrations and automation.
+
+---
 
 ## Original Assignment Requirements
 
