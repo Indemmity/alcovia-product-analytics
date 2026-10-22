@@ -1,0 +1,41 @@
+stage_id,student_id,chapter_id,stage_number,stage_name,status,score_pct,evidence_date,notes
+CRS-001,STU-001,CH-MATH-01,1,Reading,Complete,,2026-10-15,Fictional sample
+CRS-002,STU-001,CH-MATH-01,2,Notes/Recall,Complete,,2026-10-16,Fictional sample
+CRS-003,STU-001,CH-MATH-01,3,Practice Accuracy,Complete,82,2026-10-17,Fictional sample · exceeds 70% threshold
+CRS-004,STU-001,CH-MATH-01,4,Timed Past-Paper,Complete,,2026-10-18,Fictional sample
+CRS-005,STU-001,CH-MATH-01,5,Exam Readiness,Complete,85,2026-10-21,Fictional sample · exceeds 80% threshold
+CRS-006,STU-001,CH-ENG-01,1,Reading,Complete,,2026-10-15,Fictional sample
+CRS-007,STU-001,CH-ENG-01,2,Notes/Recall,In progress,,2026-10-19,Fictional sample · incomplete chapter
+CRS-008,STU-001,CH-ENG-01,3,Practice Accuracy,Not started,0,2026-10-19,Fictional sample
+CRS-009,STU-001,CH-ENG-01,4,Timed Past-Paper,Not started,,2026-10-19,Fictional sample
+CRS-010,STU-001,CH-ENG-01,5,Exam Readiness,Not started,,2026-10-19,Fictional sample
+CRS-011,STU-002,CH-MATH-01,1,Reading,Complete,,2026-10-14,Fictional sample
+CRS-012,STU-002,CH-MATH-01,2,Notes/Recall,Complete,,2026-10-16,Fictional sample
+CRS-013,STU-002,CH-MATH-01,3,Practice Accuracy,Complete,65,2026-10-18,Fictional sample · below 70% threshold
+CRS-014,STU-002,CH-MATH-01,4,Timed Past-Paper,Failed,,2026-10-20,Fictional sample
+CRS-015,STU-002,CH-MATH-01,5,Exam Readiness,Not started,,2026-10-20,Fictional sample
+CRS-016,STU-002,CH-ENG-01,1,Reading,Complete,,2026-10-16,Fictional sample
+CRS-017,STU-002,CH-ENG-01,2,Notes/Recall,Complete,,2026-10-17,Fictional sample
+CRS-018,STU-002,CH-ENG-01,3,Practice Accuracy,Complete,72,2026-10-18,Fictional sample · meets 70% threshold
+CRS-019,STU-002,CH-ENG-01,4,Timed Past-Paper,In progress,,2026-10-21,Fictional sample
+CRS-020,STU-002,CH-ENG-01,5,Exam Readiness,Not assessed,,2026-10-21,Fictional sample
+CRS-021,STU-003,CH-SCI-01,1,Reading,Complete,,2026-10-13,Fictional sample
+CRS-022,STU-003,CH-SCI-01,2,Notes/Recall,Complete,,2026-10-14,Fictional sample
+CRS-023,STU-003,CH-SCI-01,3,Practice Accuracy,Complete,88,2026-10-17,Fictional sample · exceeds 70% threshold
+CRS-024,STU-003,CH-SCI-01,4,Timed Past-Paper,Complete,,2026-10-19,Fictional sample
+CRS-025,STU-003,CH-SCI-01,5,Exam Readiness,Complete,92,2026-10-21,Fictional sample · exceeds 80% threshold · fully ready
+CRS-026,STU-004,CH-HUM-01,1,Reading,In progress,,2026-10-18,Fictional sample · incomplete
+CRS-027,STU-004,CH-HUM-01,2,Notes/Recall,Not started,,2026-10-18,Fictional sample
+CRS-028,STU-004,CH-HUM-01,3,Practice Accuracy,Not assessed,,2026-10-18,Fictional sample
+CRS-029,STU-004,CH-HUM-01,4,Timed Past-Paper,Not started,,2026-10-18,Fictional sample
+CRS-030,STU-004,CH-HUM-01,5,Exam Readiness,Not assessed,,2026-10-18,Fictional sample
+CRS-031,STU-005,CH-MATH-02,1,Reading,Complete,,2026-10-15,Fictional sample
+CRS-032,STU-005,CH-MATH-02,2,Notes/Recall,Complete,,2026-10-17,Fictional sample
+CRS-033,STU-005,CH-MATH-02,3,Practice Accuracy,Complete,78,2026-10-18,Fictional sample · meets 70% threshold
+CRS-034,STU-005,CH-MATH-02,4,Timed Past-Paper,Complete,,2026-10-19,Fictional sample
+CRS-035,STU-005,CH-MATH-02,5,Exam Readiness,In progress,75,2026-10-21,Fictional sample · below 80% threshold
+CRS-036,STU-006,CH-MATH-01,1,Reading,Not assessed,,2026-10-20,Fictional sample · new student
+CRS-037,STU-006,CH-MATH-01,2,Notes/Recall,Not assessed,,2026-10-20,Fictional sample
+CRS-038,STU-006,CH-MATH-01,3,Practice Accuracy,Not assessed,,2026-10-20,Fictional sample
+CRS-039,STU-006,CH-MATH-01,4,Timed Past-Paper,Not assessed,,2026-10-20,Fictional sample
+CRS-040,STU-006,CH-MATH-01,5,Exam Readiness,Not assessed,,2026-10-20,Fictional sample

@@ -1,0 +1,973 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alcovia Student Dashboard — Fictional prototype</title>
+  <style>
+    :root {
+      --bg:#f5f7fb; --card:#fff; --ink:#172b4d; --muted:#667085;
+      --line:#e5eaf2; --teal:#177e89; --teal2:#e7f4f5;
+      --warn:#8a5a00; --danger:#9b1c1c; --ok:#0f6b4c;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); font: 14px/1.45 system-ui, Arial; color: var(--ink); }
+    header { background: #17324d; color: #fff; padding: 22px 25px; }
+    h1 { font-size: 23px; margin: 0 0 5px; }
+    header p { margin: 0; color: #d5e1ed; }
+    .wrap { max-width: 1150px; margin: auto; padding: 22px; }
+    .notice, .error, .empty { padding: 10px 13px; border-radius: 10px; margin-bottom: 16px; }
+    .notice { background: #fff4d6; border: 1px solid #f0d58a; color: #684d0a; }
+    .error  { background: #fdecec; border: 1px solid #f0b4b4; color: var(--danger); }
+    .empty  { background: #eef4f8; border: 1px solid var(--line); color: var(--muted); }
+    .controls, .cards, .grid { display: grid; gap: 13px; }
+    .controls { grid-template-columns: repeat(4, 1fr); background: #fff; padding: 14px; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 16px; }
+    .controls label { display: block; color: var(--muted); font-size: 12px; margin-bottom: 5px; }
+    select, input, button { font: inherit; }
+    select, input[type="search"] { width: 100%; padding: 9px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--ink); }
+    select:focus-visible, input:focus-visible, .btn:focus-visible { outline: 3px solid #79c2c8; outline-offset: 2px; }
+    .cards { grid-template-columns: repeat(4, 1fr); margin-bottom: 16px; }
+    .card, .panel { background: #fff; border: 1px solid var(--line); border-radius: 13px; padding: 16px; }
+    .k   { font-size: 12px; color: var(--muted); }
+    .v   { font-size: 25px; font-weight: 750; margin: 7px 0; }
+    .muted { font-size: 12px; color: var(--muted); }
+    .grid { grid-template-columns: 1fr 1fr; margin-bottom: 15px; }
+    .panel h2 { font-size: 15px; margin: 0 0 12px; }
+    .barrow { display: grid; grid-template-columns: 140px 1fr 52px; gap: 8px; align-items: center; margin: 12px 0; font-size: 12px; }
+    .bar  { height: 9px; background: #e8eef3; border-radius: 8px; overflow: hidden; }
+    .bar span { display: block; height: 100%; background: var(--teal); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th, td { text-align: left; padding: 9px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { color: var(--muted); font-weight: 600; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+    .tabs button { padding: 9px 13px; border: 1px solid var(--line); background: #fff; border-radius: 8px; cursor: pointer; color: var(--ink); }
+    .tabs button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .tabs button:focus-visible { outline: 3px solid #79c2c8; outline-offset: 2px; }
+    .view { display: none; }
+    .view.active { display: block; }
+    .foot { font-size: 11px; color: var(--muted); margin-top: 20px; }
+
+    /* ── Continue studying card ── */
+    .continue {
+      background: linear-gradient(180deg, #f3fbfb 0%, #fff 100%);
+      border: 2px solid #b7d9dc;
+      border-radius: 13px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .continue .card-eyebrow { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+    .continue h2 { margin: 0 0 8px; font-size: 19px; }
+    .continue .meta { margin: 0 0 14px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .continue .meta b { color: var(--ink); }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .btn { border: 0; border-radius: 10px; padding: 11px 18px; cursor: pointer; font-weight: 650; font-size: 13px; transition: opacity .15s; }
+    .btn:hover { opacity: .88; }
+    .btn-primary   { background: var(--teal); color: #fff; }
+    .btn-secondary { background: var(--teal2); color: #114f56; border: 1px solid #b7d9dc; }
+    .priority-note { font-size: 12px; color: var(--muted); margin: 10px 0 0; }
+    .toast { margin-top: 14px; padding: 10px 14px; border-radius: 8px; background: #e7f4f5; border: 1px solid #b7d9dc; font-size: 13px; }
+
+    /* ── Search ── */
+    .search-entry { display: flex; gap: 10px; align-items: flex-end; }
+    .search-entry > div { flex: 1; }
+    .result { padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .result:last-child { border-bottom: none; }
+    .pill { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; background: #eef2f6; color: var(--muted); margin-left: 6px; }
+    .pill-avail  { background: #d4f2e8; color: #0b5e3e; }
+    .pill-del    { background: #fee2e2; color: #7f1d1d; }
+    .pill-locked { background: #fef3c7; color: #92400e; }
+
+    /* ── Today's priorities ── */
+    .today { margin: 0; padding-left: 18px; }
+    .today li { margin-bottom: 6px; }
+    .warn { color: var(--warn); font-weight: 600; }
+
+    /* ── Risk signals ── */
+    .risk-ok { color: var(--ok); }
+
+    @media (max-width: 850px) {
+      .cards    { grid-template-columns: repeat(2, 1fr); }
+      .grid, .controls { grid-template-columns: 1fr; }
+      .search-entry { flex-direction: column; }
+    }
+    @media (max-width: 440px) { .cards { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Alcovia · Student Home &amp; Progress</h1>
+    <p>Fictional prototype · not connected to Alcovia student systems · demo as-of 22 Oct 2026</p>
+  </header>
+  <main class="wrap">
+    <div class="notice" role="note">
+      <b>Privacy &amp; dummy-data notice:</b> Student IDs, names and scores are fictional sample records created for this assessment. This page has no authentication and must not be used with real student data. Academic search is a local prototype over the sample catalogue only.
+    </div>
+    <div id="status" class="empty" role="status" aria-live="polite">
+      Loading sample CSVs… Use a local HTTP server rather than opening the file directly.
+    </div>
+    <div id="app" hidden>
+      <div class="controls" role="toolbar" aria-label="Dashboard filters">
+        <div>
+          <label for="persona">Demo student (fictional)</label>
+          <select id="persona" aria-label="Select demo student"></select>
+        </div>
+        <div>
+          <label for="cohort">Cohort (advisor views)</label>
+          <select id="cohort" aria-label="Filter by cohort">
+            <option value="All">All cohorts</option>
+            <option value="Cohort A">Cohort A</option>
+            <option value="Cohort B">Cohort B</option>
+          </select>
+        </div>
+        <div>
+          <label for="advisor">Advisor (advisor views)</label>
+          <select id="advisor" aria-label="Filter by advisor">
+            <option value="All">All advisors</option>
+            <option value="Advisor 1">Advisor 1</option>
+            <option value="Advisor 2">Advisor 2</option>
+          </select>
+        </div>
+        <div>
+          <label for="grain">Progress period</label>
+          <select id="grain" aria-label="Select progress period grain">
+            <option value="daily">Daily</option>
+            <option value="weekly" selected>Weekly</option>
+            <option value="monthly">Monthly</option>
+            <option value="quarterly">Quarterly</option>
+          </select>
+        </div>
+      </div>
+
+      <nav class="tabs" role="tablist" aria-label="Dashboard sections">
+        <button class="active" data-view="home"      role="tab" aria-selected="true"  aria-controls="home">Student Home</button>
+        <button                data-view="progress"  role="tab" aria-selected="false" aria-controls="progress">My progress</button>
+        <button                data-view="chapters"  role="tab" aria-selected="false" aria-controls="chapters">Chapter readiness</button>
+        <button                data-view="personal"  role="tab" aria-selected="false" aria-controls="personal">Personal development</button>
+        <button                data-view="search"    role="tab" aria-selected="false" aria-controls="search">Find content</button>
+        <button                data-view="programme" role="tab" aria-selected="false" aria-controls="programme">Programme overview</button>
+        <button                data-view="students"  role="tab" aria-selected="false" aria-controls="students">Advisor caseload</button>
+        <button                data-view="delivery"  role="tab" aria-selected="false" aria-controls="delivery">Activity delivery</button>
+      </nav>
+
+      <section class="view active" id="home"      role="tabpanel"></section>
+      <section class="view"        id="progress"  role="tabpanel"></section>
+      <section class="view"        id="chapters"  role="tabpanel"></section>
+      <section class="view"        id="personal"  role="tabpanel"></section>
+
+      <section class="view" id="search" role="tabpanel">
+        <div class="panel">
+          <h2>Academic search <span class="pill">Prototype</span></h2>
+          <p class="muted">Searches the fictional sample catalogue of subjects, chapters and tasks. Does not query a live Alcovia index or any external system.</p>
+          <form class="search-entry" id="searchform" role="search" aria-label="Academic content search">
+            <div>
+              <label for="q">Search subjects, chapters or tasks</label>
+              <input id="q" type="search" placeholder="e.g. linear, forces, civic" autocomplete="off" aria-describedby="search-hint">
+            </div>
+            <button class="btn btn-primary" type="submit">Search</button>
+          </form>
+          <p id="search-hint" class="muted" style="margin-top:6px">Only searches the 18-row fictional sample catalogue. Results are not Alcovia's live curriculum.</p>
+          <div id="searchresults" class="empty" style="margin-top:14px" role="status" aria-live="polite">
+            Type a query to search the sample catalogue.
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="programme" role="tabpanel"></section>
+
+      <section class="view" id="students" role="tabpanel">
+        <div class="panel">
+          <h2>Student progress (fictional sample)</h2>
+          <table aria-label="Student progress table">
+            <thead>
+              <tr>
+                <th scope="col">Student ID</th>
+                <th scope="col">Cohort</th>
+                <th scope="col">Advisor</th>
+                <th scope="col">Syllabus</th>
+                <th scope="col">Readiness</th>
+                <th scope="col">Tasks</th>
+                <th scope="col">Goal</th>
+                <th scope="col">Advisor review</th>
+              </tr>
+            </thead>
+            <tbody id="studentrows"></tbody>
+          </table>
+          <p class="muted" style="margin-top:12px">Missing scores shown as — (unavailable), not as 0%. STU-006 has no numeric baseline yet.</p>
+        </div>
+      </section>
+
+      <section class="view" id="delivery" role="tabpanel"></section>
+    </div>
+
+    <p class="foot">
+      Prototype limitations: no authentication, no live Alcovia integration, no wearable or device-lock tracking.
+      Missing scores are shown as — (unavailable), not as 0. Confirm all KPI definitions with Alcovia before production use.
+    </p>
+  </main>
+
+  <script src="data_loader.js"></script>
+  <script>
+    "use strict";
+    const D = window.AlcoviaData;
+    let DATA = null;
+
+    /* ── Small utilities ── */
+    function esc(str) {
+      return String(str ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+    }
+    function card(k, v, s) {
+      return `<div class="card"><div class="k">${k}</div><div class="v">${esc(v)}</div><div class="muted">${esc(s)}</div></div>`;
+    }
+    function bar(label, val) {
+      if (val == null) return `<div class="barrow"><span>${esc(label)}</span><div class="bar" aria-label="${esc(label)}: unavailable"></div><b aria-label="unavailable">—</b></div>`;
+      const pctInt = Math.min(100, Math.max(0, Math.round(val)));
+      return `<div class="barrow"><span>${esc(label)}</span><div class="bar" role="img" aria-label="${esc(label)}: ${pctInt}%"><span style="width:${pctInt}%"></span></div><b>${pctInt}%</b></div>`;
+    }
+    function pct(n) {
+      if (n == null || !Number.isFinite(n)) return "—";
+      return (n * 100).toFixed(0) + "%";
+    }
+
+    /**
+     * Average of a numeric field across an array of objects.
+     * Returns null if no valid numbers exist.
+     */
+    function avg(rows, key) {
+      const nums = rows.map(r => D.toNumber(r[key])).filter(n => n != null);
+      if (!nums.length) return null;
+      return Math.round(nums.reduce((a, b) => a + b, 0) / nums.length);
+    }
+
+    function catalogItem(id) {
+      return DATA.catalog.find(c => c.item_id === id) || null;
+    }
+    function isCompleted(row) {
+      return String(row.status).toLowerCase() === "completed" || !!row.completed_at;
+    }
+
+    /**
+     * An activity is eligible for the continue card if:
+     * - not deleted or locked
+     * - not completed
+     * - task exists in catalogue as Available + eligible_for_resume=true
+     */
+    function eligibleActivity(row) {
+      if (D.toBool(row.deleted) || D.toBool(row.locked)) return false;
+      if (isCompleted(row)) return false;
+      const item = catalogItem(row.task_id);
+      if (!item || item.status !== "Available" || item.eligible_for_resume !== "true") return false;
+      return true;
+    }
+
+    /**
+     * A checkpoint is valid for resume if the activity is eligible,
+     * not stale, has a recorded checkpoint time and progress seconds.
+     */
+    function validCheckpoint(row) {
+      return (
+        eligibleActivity(row) &&
+        !D.toBool(row.stale) &&
+        !!row.last_checkpoint_at &&
+        D.toNumber(row.checkpoint_seconds) != null
+      );
+    }
+
+    /**
+     * Find the highest-priority unstarted catalogue task for this student
+     * (not completed, not blocked/deleted/locked).
+     */
+    function nextCatalogTask(studentId) {
+      const done    = new Set(DATA.activity.filter(a => a.student_id === studentId && isCompleted(a)).map(a => a.task_id));
+      const blocked = new Set(DATA.activity.filter(a => a.student_id === studentId && (D.toBool(a.deleted) || D.toBool(a.locked))).map(a => a.task_id));
+      return DATA.catalog
+        .filter(c => c.item_type === "Task" && c.status === "Available" && c.eligible_for_resume === "true" && !done.has(c.item_id) && !blocked.has(c.item_id))
+        .sort((a, b) => Number(a.priority_rank) - Number(b.priority_rank))[0] || null;
+    }
+
+    /**
+     * Compute the continue-studying plan for one student.
+     * Returns: { lastAny, resume, priority, same, reason, unfinishedCount }
+     *
+     * resume   = most recently checkpointed valid activity
+     * priority = the highest-priority eligible unfinished activity,
+     *            or the highest-priority catalogue task if none exist
+     * same     = resume and priority point to the same task
+     *            → show only one button
+     */
+    function continuePlan(studentId) {
+      const rows = DATA.activity.filter(a => a.student_id === studentId);
+
+      // Most recently started activity of any kind (for error-reason messages)
+      const lastAny = [...rows].sort((a, b) =>
+        String(b.started_at).localeCompare(String(a.started_at))
+      )[0] || null;
+
+      // Best resume: most recently checkpointed valid row
+      const resume = rows
+        .filter(validCheckpoint)
+        .sort((a, b) => String(b.last_checkpoint_at).localeCompare(String(a.last_checkpoint_at)))[0] || null;
+
+      // Priority from unfinished eligible non-stale activities (lowest rank = highest priority)
+      const unfinished = rows
+        .filter(a => eligibleActivity(a) && !D.toBool(a.stale))
+        .sort((a, b) => Number(a.priority_rank) - Number(b.priority_rank));
+      const priorityUnfinished = unfinished[0] || null;
+
+      // Fallback priority from catalogue
+      const catalogPriority = nextCatalogTask(studentId);
+
+      const priority = priorityUnfinished
+        ? { id: priorityUnfinished.task_id, title: priorityUnfinished.task_title, subject: priorityUnfinished.subject, chapter: priorityUnfinished.chapter, source: "unfinished" }
+        : catalogPriority
+          ? { id: catalogPriority.item_id, title: catalogPriority.task_title, subject: catalogPriority.subject, chapter: catalogPriority.chapter, source: "catalog" }
+          : null;
+
+      // Human-readable reason shown when there is no resume point
+      let reason = "";
+      if (!rows.length) {
+        reason = "No previous activity is stored for this fictional student. Use Find content to browse the catalogue.";
+      } else if (lastAny && D.toBool(lastAny.deleted)) {
+        reason = "The most recent saved activity was deleted and cannot be resumed.";
+      } else if (lastAny && D.toBool(lastAny.locked)) {
+        reason = "The most recent saved activity is locked and cannot be resumed.";
+      } else if (lastAny && isCompleted(lastAny) && !resume) {
+        reason = "The most recent activity is already completed. No other valid checkpoint exists.";
+      } else if (lastAny && D.toBool(lastAny.stale) && !resume) {
+        reason = "The last saved checkpoint is stale (saved more than the allowed window ago) and has not been offered as a resume point.";
+      } else if (!resume) {
+        reason = "There is no valid unfinished checkpoint available to resume.";
+      }
+
+      const same = !!(resume && priority && resume.task_id === priority.id);
+
+      return { lastAny, resume, priority, same, reason, unfinishedCount: unfinished.length };
+    }
+
+    /* ─────────────────────────────────────
+       TAB: Student Home
+    ───────────────────────────────────── */
+    function homeHtml() {
+      const id      = document.getElementById("persona").value;
+      const student = DATA.students.find(s => s.student_id === id);
+      const grain   = document.getElementById("grain").value;
+      const snap    = DATA.progress.filter(p => p.student_id === id && p.period_grain === grain);
+      const plan    = continuePlan(id);
+      
+      // Automation indicators: overdue milestones and missing advisor inputs
+      const overdueMs = DATA.personalDev.filter(m => m.student_id === id && m.status === "Overdue");
+      const missingInputs = DATA.advisorInputs.filter(a => a.student_id === id && (a.input_status === "Missing" || a.input_status === "Overdue"));
+      const overdueMilestoneCount = overdueMs.length;
+      const missingInputCount = missingInputs.length;
+
+      /* ── Continue studying card content ── */
+      let cardHeading = "Continue studying";
+      let metaHtml    = "";
+      let actionsHtml = "";
+      let priorityNote = "";
+
+      if (plan.resume && !plan.priority) {
+        // Has a valid checkpoint, no separate priority task
+        cardHeading = "Continue studying";
+        metaHtml = `<p class="meta"><b>${esc(plan.resume.task_title)}</b> · ${esc(plan.resume.subject)} · ${esc(plan.resume.chapter)}<br>
+          <span>Checkpoint: ${plan.resume.checkpoint_seconds}s saved · ${plan.resume.last_checkpoint_at.replace("T", " ")}</span></p>`;
+        actionsHtml = `<div class="actions"><button class="btn btn-primary" data-open="${esc(plan.resume.task_id)}">Continue studying</button></div>`;
+
+      } else if (plan.resume && plan.same) {
+        // Resume and priority are the same task — show only one button
+        cardHeading = "Continue studying";
+        metaHtml = `<p class="meta"><b>${esc(plan.resume.task_title)}</b> · ${esc(plan.resume.subject)} · ${esc(plan.resume.chapter)}<br>
+          <span>Checkpoint: ${plan.resume.checkpoint_seconds}s saved · ${plan.resume.last_checkpoint_at.replace("T", " ")}</span></p>`;
+        actionsHtml = `<div class="actions"><button class="btn btn-primary" data-open="${esc(plan.resume.task_id)}">Continue studying</button></div>`;
+        priorityNote = `<p class="priority-note">The priority task is the same as your saved checkpoint, so only one action is shown.</p>`;
+
+      } else if (plan.resume && plan.priority && !plan.same) {
+        // Has a valid checkpoint AND a different, higher-priority eligible task
+        cardHeading = "Continue studying";
+        metaHtml = `<p class="meta"><b>${esc(plan.resume.task_title)}</b> · ${esc(plan.resume.subject)} · ${esc(plan.resume.chapter)}<br>
+          <span>Checkpoint: ${plan.resume.checkpoint_seconds}s saved · ${plan.resume.last_checkpoint_at.replace("T", " ")}</span></p>`;
+        actionsHtml = `<div class="actions">
+          <button class="btn btn-primary"   data-open="${esc(plan.resume.task_id)}">Continue studying</button>
+          <button class="btn btn-secondary" data-open="${esc(plan.priority.id)}">Switch to priority task</button>
+        </div>`;
+        priorityNote = `<p class="priority-note">A different higher-priority eligible task is available: <b>${esc(plan.priority.title)}</b> (${esc(plan.priority.subject)}).</p>`;
+
+      } else if (plan.priority) {
+        // No valid checkpoint but a priority task exists
+        cardHeading = plan.priority.source === "catalog" ? "Start your next task" : "Resume priority task";
+        metaHtml = `<p class="meta">${esc(plan.reason)}<br><b>${esc(plan.priority.title)}</b> · ${esc(plan.priority.subject)}${plan.priority.chapter ? " · " + esc(plan.priority.chapter) : ""}</p>`;
+        actionsHtml = `<div class="actions"><button class="btn btn-primary" data-open="${esc(plan.priority.id)}">Start priority task</button></div>`;
+
+      } else {
+        // Nothing available at all
+        cardHeading = "No tasks available";
+        metaHtml = `<p class="meta">${esc(plan.reason)}</p>`;
+        actionsHtml = `<p class="muted">Use <b>Find content</b> to browse the catalogue when tasks become available.</p>`;
+      }
+
+      /* ── Today's priorities list (eligible, non-stale, non-complete) ── */
+      const today = DATA.activity.filter(a =>
+        a.student_id === id && eligibleActivity(a) && !D.toBool(a.stale)
+      );
+
+      /* ── Essential progress bars ── */
+      const progressBars = snap.length
+        ? snap.map(p => bar(p.subject, D.toNumber(p.syllabus_completion_pct))).join("")
+        : `<div class="empty">No ${grain} progress snapshot is stored for this student. That is missing data, not a 0% score.</div>`;
+
+      /* ── Mini KPI cards ── */
+      const syllAvg = avg(snap, "syllabus_completion_pct");
+      const readAvg = avg(snap, "readiness_score");
+      const taskAvg = avg(snap, "task_completion_pct");
+
+      return `
+        <article class="continue" aria-labelledby="continue-title">
+          <p class="card-eyebrow">Next action · ${esc(student.student_id)} · ${esc(student.display_name)} · ${esc(student.cohort)} · ${student.status}</p>
+          <h2 id="continue-title">${cardHeading}</h2>
+          ${metaHtml}
+          ${actionsHtml}
+          ${priorityNote}
+          <div id="studytoast" class="toast" hidden role="status" aria-live="assertive"></div>
+        </article>
+
+        ${overdueMilestoneCount > 0 ? `<div class="error" role="alert">
+          <b>⚠️ Action needed:</b> ${overdueMilestoneCount} personal development milestone${overdueMilestoneCount !== 1 ? 's' : ''} overdue.
+          ${overdueMs.map(m => `<br>· ${esc(m.milestone_description)} (due ${esc(m.target_date)})`).join('')}
+          <br><small>Advisor review recommended.</small>
+        </div>` : ''}
+
+        ${missingInputCount > 0 ? `<div class="notice" role="alert">
+          <b>📋 Advisor check-in needed:</b> ${missingInputCount} input${missingInputCount !== 1 ? 's' : ''} from advisor.
+          ${missingInputs.slice(0, 3).map(a => `<br>· ${esc(a.subject)} (due ${esc(a.due_date)})`).join('')}
+          ${missingInputCount > 3 ? `<br>· ... and ${missingInputCount - 3} more` : ''}
+        </div>` : ''}
+
+        <div class="grid">
+          <div class="panel">
+            <h2>Today's priorities</h2>
+            ${today.length
+              ? `<ul class="today">${today.map(t =>
+                  `<li>
+                    <b>${esc(t.task_title)}</b> — ${esc(t.subject)}, ${esc(t.chapter)}
+                    ${D.toBool(t.stale) ? ` <span class="warn">(stale checkpoint)</span>` : ""}
+                  </li>`
+                ).join("")}</ul>`
+              : `<div class="empty">No unfinished eligible tasks for today. Use <b>Find content</b> to browse the catalogue.</div>`
+            }
+          </div>
+          <div class="panel">
+            <h2>Essential ${grain} progress</h2>
+            ${progressBars}
+            ${snap[0]
+              ? `<p class="muted">Goal: <b>${esc(snap[0].goal_status || "—")}</b> · Advisor review: <b>${esc(snap[0].advisor_review_status || "—")}</b></p>`
+              : `<p class="muted">Progress data unavailable for this student and grain.</p>`
+            }
+          </div>
+        </div>
+
+        <div class="cards">
+          ${card("Syllabus completion", syllAvg == null ? "—" : syllAvg + "%", grain + " snapshot · missing shown as —")}
+          ${card("Chapter readiness",   readAvg == null ? "—" : readAvg + "%", grain + " snapshot")}
+          ${card("Task completion",     taskAvg == null ? "—" : taskAvg + "%", grain + " snapshot")}
+          ${card("Unfinished eligible tasks", String(plan.unfinishedCount), "Deleted, locked, stale and completed tasks excluded")}
+        </div>
+      `;
+    }
+
+    /* ─────────────────────────────────────
+       TAB: My progress
+    ───────────────────────────────────── */
+    function progressHtml() {
+      const id    = document.getElementById("persona").value;
+      const grain = document.getElementById("grain").value;
+      const rows  = DATA.progress.filter(p => p.student_id === id && p.period_grain === grain);
+      const acts  = DATA.activity.filter(a => a.student_id === id);
+      const hours = avg(rows, "hours_studied");
+
+      return `
+        <div class="cards">
+          ${card("Period", grain, "Pre-aggregated snapshots in the sample file")}
+          ${card("Hours studied", hours == null ? "—" : hours, "Average across subjects in this grain")}
+          ${card("Activities logged", String(acts.length), "Includes completed and unfinished")}
+          ${card("Advisor review", rows[0] ? rows[0].advisor_review_status || "—" : "—", "Missing review is not a performance score")}
+        </div>
+        <div class="panel">
+          <h2>Study progress, readiness and goals (${grain})</h2>
+          ${rows.length
+            ? `<table aria-label="Study progress table">
+                <thead><tr>
+                  <th scope="col">Subject</th><th scope="col">Chapter</th>
+                  <th scope="col">Syllabus</th><th scope="col">Readiness</th>
+                  <th scope="col">Tasks</th><th scope="col">Hours</th>
+                  <th scope="col">Goal</th><th scope="col">Advisor review</th>
+                </tr></thead>
+                <tbody>${rows.map(p => `<tr>
+                  <td>${esc(p.subject)}</td><td>${esc(p.chapter)}</td>
+                  <td>${D.toNumber(p.syllabus_completion_pct) == null ? "—" : D.toNumber(p.syllabus_completion_pct) + "%"}</td>
+                  <td>${D.toNumber(p.readiness_score) == null ? "—" : D.toNumber(p.readiness_score) + "%"}</td>
+                  <td>${D.toNumber(p.task_completion_pct) == null ? "—" : D.toNumber(p.task_completion_pct) + "%"}</td>
+                  <td>${D.toNumber(p.hours_studied) == null ? "—" : D.toNumber(p.hours_studied)}</td>
+                  <td>${esc(p.goal_status || "—")}</td>
+                  <td>${esc(p.advisor_review_status || "—")}</td>
+                </tr>`).join("")}</tbody>
+              </table>`
+            : `<div class="empty">No ${grain} rows exist for this student. That is missing data, not a 0% score.</div>`
+          }
+        </div>
+      `;
+    }
+
+    /* ─────────────────────────────────────
+       Shared: filtered students for advisor views
+    ───────────────────────────────────── */
+    function filteredStudents() {
+      const cohort  = document.getElementById("cohort").value;
+      const advisor = document.getElementById("advisor").value;
+      const grain   = document.getElementById("grain").value;
+      return DATA.students
+        .filter(s => (cohort === "All" || s.cohort === cohort) && (advisor === "All" || s.advisor === advisor))
+        .map(s => {
+          const p = DATA.progress.filter(row => row.student_id === s.student_id && row.period_grain === grain);
+          return {
+            s,
+            p,
+            syllabus:  avg(p, "syllabus_completion_pct"),
+            readiness: avg(p, "readiness_score"),
+            tasks:     avg(p, "task_completion_pct"),
+          };
+        });
+    }
+
+    /* ─────────────────────────────────────
+       TAB: Chapter readiness (5-stage breakdown)
+    ───────────────────────────────────── */
+    function chaptersHtml() {
+      const id = document.getElementById("persona").value;
+      const stages = DATA.chapterReadiness.filter(s => s.student_id === id);
+      
+      if (!stages.length) {
+        return `<div class="panel"><h2>Chapter readiness</h2><div class="empty">No chapter readiness data for this student.</div></div>`;
+      }
+
+      // Group by chapter_id
+      const chapters = {};
+      stages.forEach(s => {
+        if (!chapters[s.chapter_id]) chapters[s.chapter_id] = [];
+        chapters[s.chapter_id].push(s);
+      });
+
+      const chapterHtml = Object.keys(chapters).sort().map(chId => {
+        const chapterStages = chapters[chId].sort((a, b) => Number(a.stage_number) - Number(b.stage_number));
+        
+        // Determine overall readiness
+        const allStages = {1: null, 2: null, 3: null, 4: null, 5: null};
+        chapterStages.forEach(s => {
+          allStages[s.stage_number] = s;
+        });
+
+        // Overall readiness status: all 5 complete AND practice≥70% AND readiness≥80%
+        const isReady = allStages[1]?.status === "Complete" &&
+                       allStages[2]?.status === "Complete" &&
+                       allStages[3]?.status === "Complete" &&
+                       allStages[3]?.score_pct && Number(allStages[3].score_pct) >= 70 &&
+                       allStages[4]?.status === "Complete" &&
+                       allStages[5]?.status === "Complete" &&
+                       allStages[5]?.score_pct && Number(allStages[5].score_pct) >= 80;
+
+        const readyIndicator = isReady
+          ? '<span style="color:var(--ok);font-weight:bold">✓ Ready for exam</span>'
+          : '<span style="color:var(--warn);font-weight:bold">⚠ Not ready</span>';
+
+        return `
+          <div class="panel" style="margin-bottom:16px">
+            <h3 style="font-size:14px;margin:0 0 12px">${esc(chId)} ${readyIndicator}</h3>
+            <table style="width:100%;font-size:12px">
+              <thead><tr>
+                <th scope="col">Stage</th>
+                <th scope="col">Status</th>
+                <th scope="col">Score</th>
+                <th scope="col">Evidence date</th>
+                <th scope="col">Notes</th>
+              </tr></thead>
+              <tbody>
+                ${chapterStages.map(s => {
+                  const scoreHtml = s.stage_number === 3 || s.stage_number === 5
+                    ? (s.score_pct
+                        ? `${s.score_pct}% ${s.stage_number === 3 && Number(s.score_pct) >= 70 ? '✓' : s.stage_number === 5 && Number(s.score_pct) >= 80 ? '✓' : '✗'}`
+                        : '—')
+                    : '—';
+                  return `<tr>
+                    <td><b>${esc(s.stage_name)}</b></td>
+                    <td>${esc(s.status)}</td>
+                    <td>${scoreHtml}</td>
+                    <td>${esc(s.evidence_date || '—')}</td>
+                    <td><span class="muted">${esc(s.notes?.substring(0, 30) || '—')}</span></td>
+                  </tr>`;
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="panel">
+          <h2>Chapter readiness · 5-stage breakdown <span class="pill">Fictional sample</span></h2>
+          <p class="muted">Each chapter progresses through 5 stages: Reading → Notes/Recall → Practice (≥70%) → Timed Past-Paper → Readiness (≥80%).
+          Missing scores shown as — (not assessed). Status-only stages (1,2,4) use: Complete, In progress, Failed, Not started, Not assessed.</p>
+          ${chapterHtml}
+        </div>
+      `;
+    }
+
+    /* ─────────────────────────────────────
+       TAB: Personal development (milestones, habits, wellness)
+    ───────────────────────────────────── */
+    function personalHtml() {
+      const id = document.getElementById("persona").value;
+      const milestones = DATA.personalDev.filter(m => m.student_id === id);
+      const habits = DATA.studyHabits.find(h => h.student_id === id);
+      const wellness = DATA.wellness.filter(w => w.student_id === id);
+      const activities = DATA.extracurricular.filter(a => a.student_id === id);
+      const advisorInputs = DATA.advisorInputs.filter(a => a.student_id === id);
+
+      const milestonesHtml = milestones.length
+        ? `<table style="width:100%;font-size:12px">
+             <thead><tr>
+               <th scope="col">Goal</th><th scope="col">Type</th><th scope="col">Target date</th>
+               <th scope="col">Status</th><th scope="col">Completion</th>
+             </tr></thead>
+             <tbody>
+               ${milestones.map(m => `<tr>
+                 <td><b>${esc(m.milestone_description)}</b></td>
+                 <td><span class="pill">${esc(m.milestone_type)}</span></td>
+                 <td>${esc(m.target_date)}</td>
+                 <td>${m.status === 'Overdue' ? '<span style="color:var(--danger)">⚠ ' + esc(m.status) + '</span>' : esc(m.status)}</td>
+                 <td>${esc(m.completion_date || '—')}</td>
+               </tr>`).join('')}
+             </tbody>
+           </table>`
+        : '<div class="empty">No milestones recorded for this student.</div>';
+
+      const habitsHtml = habits
+        ? `<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:13px">
+             ${card('Daily focus time', habits.focus_minutes_daily + ' min', 'Focus minutes')}
+             ${card('Study streak', habits.study_streak_days + ' days', 'Consecutive days')}
+             ${card('Longest session', habits.longest_session_minutes + ' min', 'Max single session')}
+             ${card('Break ratio', habits.break_ratio_pct + '%', 'Break time %')}
+           </div>
+           <p class="muted" style="margin-top:12px">Environment: ${esc(habits.environment_quality)}</p>`
+        : '<div class="empty">No study habits recorded for this student.</div>';
+
+      const wellnessHtml = wellness.length
+        ? `<table style="width:100%;font-size:12px;margin-top:12px">
+             <thead><tr>
+               <th scope="col">Date</th><th scope="col">Active min</th><th scope="col">Sleep</th>
+               <th scope="col">Stress</th><th scope="col">Mood</th><th scope="col">Source</th>
+             </tr></thead>
+             <tbody>
+               ${wellness.map(w => `<tr>
+                 <td>${esc(w.recorded_date)}</td>
+                 <td>${w.active_minutes ? w.active_minutes + ' min' : '—'}</td>
+                 <td>${w.sleep_hours ? w.sleep_hours + 'h' : '—'}</td>
+                 <td>${esc(w.stress_level)}</td>
+                 <td>${esc(w.mood_rating)}</td>
+                 <td><span class="muted">${esc(w.data_source)}</span></td>
+               </tr>`).join('')}
+             </tbody>
+           </table>
+           <p class="muted" style="margin-top:8px">Consent: <b>${esc(wellness[0]?.consent_status || '—')}</b> · All wellness data is fictional sample only.</p>`
+        : '<div class="empty">No wellness data recorded for this student.</div>';
+
+      const activitiesHtml = activities.length
+        ? `<table style="width:100%;font-size:12px;margin-top:12px">
+             <thead><tr>
+               <th scope="col">Activity</th><th scope="col">Type</th><th scope="col">Frequency</th>
+               <th scope="col">Status</th><th scope="col">Hours/wk</th>
+             </tr></thead>
+             <tbody>
+               ${activities.map(a => `<tr>
+                 <td><b>${esc(a.activity_name)}</b></td>
+                 <td><span class="pill">${esc(a.activity_type)}</span></td>
+                 <td>${esc(a.frequency)}</td>
+                 <td>${esc(a.status)}</td>
+                 <td>${esc(a.hours_commitment)}</td>
+               </tr>`).join('')}
+             </tbody>
+           </table>`
+        : '<div class="empty">No extracurricular activities recorded for this student.</div>';
+
+      const overdueInputs = advisorInputs.filter(a => a.input_status === 'Overdue' || a.input_status === 'Missing');
+
+      return `
+        <div class="panel">
+          <h2>Personal development milestones <span class="pill">Fictional sample</span></h2>
+          <p class="muted">Academic, career and personal goals with target dates and completion tracking.</p>
+          ${milestonesHtml}
+        </div>
+
+        <div class="panel" style="margin-top:16px">
+          <h2>Study habits & wellness</h2>
+          <h3 style="font-size:13px;margin:12px 0 8px;color:var(--muted)">Study habits snapshot</h3>
+          ${habitsHtml}
+          <h3 style="font-size:13px;margin:16px 0 8px;color:var(--muted)">Wellness tracking <span style="font-size:11px">(consent-aware · fictional)</span></h3>
+          ${wellnessHtml}
+        </div>
+
+        <div class="panel" style="margin-top:16px">
+          <h2>Extracurricular activities & tutoring</h2>
+          ${activitiesHtml}
+        </div>
+
+        ${overdueInputs.length ? `<div class="notice" style="margin-top:16px">
+          <b>Advisor action items:</b> ${overdueInputs.length} input${overdueInputs.length !== 1 ? 's' : ''} overdue or missing.
+          ${overdueInputs.map(a => `<br>· ${esc(a.subject)} (due ${esc(a.due_date)})`).join('')}
+        </div>` : ''}
+      `;
+    }
+
+    /* ─────────────────────────────────────
+       TAB: Programme overview
+    ───────────────────────────────────── */
+    function programmeHtml() {
+      const ss    = filteredStudents();
+      const grain = document.getElementById("grain").value;
+
+      // Average syllabus by subject across visible students
+      const subjectMap = {};
+      ss.forEach(row => row.p.forEach(p => {
+        if (!subjectMap[p.subject]) subjectMap[p.subject] = [];
+        const n = D.toNumber(p.syllabus_completion_pct);
+        if (n != null) subjectMap[p.subject].push(n);
+      }));
+
+      const quantity = {
+        planned:   DATA.sessions.length,
+        conducted: DATA.sessions.filter(x => x.status === "Conducted").length,
+      };
+      const ratings      = DATA.feedback.map(f => D.toNumber(f.rating)).filter(n => n != null);
+      const quality      = ratings.length ? ratings.reduce((a, b) => a + b, 0) / ratings.length : null;
+      const responseRate = DATA.feedback.length ? ratings.length / DATA.feedback.length : null;
+
+      // Correctly compute programme-level averages from the flat student rows
+      const syllNums = ss.map(x => x.syllabus).filter(n => n != null);
+      const readNums = ss.map(x => x.readiness).filter(n => n != null);
+      const taskNums = ss.map(x => x.tasks).filter(n => n != null);
+      const syllAvg  = syllNums.length ? Math.round(syllNums.reduce((a, b) => a + b, 0) / syllNums.length) : null;
+      const readAvg  = readNums.length ? Math.round(readNums.reduce((a, b) => a + b, 0) / readNums.length) : null;
+      const taskAvg  = taskNums.length ? Math.round(taskNums.reduce((a, b) => a + b, 0) / taskNums.length) : null;
+
+      const needsReview = ss.filter(x => x.p.some(p => p.goal_status === "Needs review")).length;
+      const missingReview = ss.filter(x => x.p.some(p => p.advisor_review_status === "Missing" || p.advisor_review_status === "Overdue")).length;
+
+      return `
+        <div class="cards">
+          ${card("Students in view",       String(ss.length),                      "Fictional records · filtered by cohort/advisor")}
+          ${card("Avg. syllabus completion", syllAvg == null ? "—" : syllAvg + "%", grain + " · performance")}
+          ${card("Avg. chapter readiness",   readAvg == null ? "—" : readAvg + "%", grain + " · performance")}
+          ${card("Avg. task completion",     taskAvg == null ? "—" : taskAvg + "%", grain + " · quantity / execution")}
+        </div>
+        <div class="grid">
+          <div class="panel">
+            <h2>Average syllabus completion by subject</h2>
+            ${Object.keys(subjectMap).length
+              ? Object.keys(subjectMap).map(k => {
+                  const arr = subjectMap[k];
+                  return bar(k, Math.round(arr.reduce((a, b) => a + b, 0) / arr.length));
+                }).join("")
+              : `<div class="empty">No numeric subject snapshots in this view.</div>`
+            }
+          </div>
+          <div class="panel">
+            <h2>Quantity · Quality · Performance</h2>
+            ${bar("Quantity · conducted / planned", quantity.planned ? Math.round(quantity.conducted / quantity.planned * 100) : null)}
+            <p class="muted">
+              Quality mean rating: <b>${quality == null ? "—" : quality.toFixed(1) + " / 5"}</b>
+              · response rate <b>${pct(responseRate)}</b>
+              <br>Unrated feedback is excluded from the mean, not scored as 0.
+            </p>
+            ${bar("Performance · avg. syllabus", syllAvg)}
+          </div>
+        </div>
+        <div class="panel">
+          <h2>Programme risk signals</h2>
+          <p>${needsReview > 0 ? "⚠️" : "✅"} <b>${needsReview}</b> student${needsReview !== 1 ? "s" : ""} in view have a "Needs review" goal status in the ${grain} sample.</p>
+          <p>${missingReview > 0 ? "⚠️" : "✅"} <b>${missingReview}</b> have missing or overdue advisor review. That is an input gap, not automatically a poor student outcome.</p>
+          <p class="muted">STU-006 has no numeric baseline; blanks are shown as unavailable (—), not 0%.</p>
+        </div>
+      `;
+    }
+
+    /* ─────────────────────────────────────
+       TAB: Activity delivery
+    ───────────────────────────────────── */
+    function deliveryHtml() {
+      const types = {};
+      DATA.sessions.forEach(s => {
+        if (!types[s.session_type]) types[s.session_type] = { planned: 0, conducted: 0 };
+        types[s.session_type].planned++;
+        if (s.status === "Conducted") types[s.session_type].conducted++;
+      });
+      const planned   = DATA.sessions.length;
+      const conducted = DATA.sessions.filter(s => s.status === "Conducted").length;
+      const ratings   = DATA.feedback.map(f => D.toNumber(f.rating)).filter(n => n != null);
+      const avgRating = ratings.length ? ratings.reduce((a, b) => a + b, 0) / ratings.length : null;
+
+      return `
+        <div class="cards">
+          ${card("Planned sessions",  String(planned),   "Sample program_sessions.csv")}
+          ${card("Conducted",         String(conducted), "Quantity")}
+          ${card("Completion rate",   planned ? pct(conducted / planned) : "—", "Conducted ÷ planned")}
+          ${card("Avg. feedback",     avgRating == null ? "—" : avgRating.toFixed(1) + " / 5", ratings.length ? "Rated responses only · unrated excluded" : "No rated responses")}
+        </div>
+        <div class="panel">
+          <h2>Planned vs conducted by activity type</h2>
+          ${Object.keys(types).map(k => {
+            const t = types[k];
+            return bar(k, t.planned ? Math.round(t.conducted / t.planned * 100) : null) +
+                   `<div class="muted" style="margin:-8px 0 4px 156px">${t.conducted} conducted of ${t.planned} planned</div>`;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    /* ─────────────────────────────────────
+       Academic search
+    ───────────────────────────────────── */
+    function renderSearch(query) {
+      const q   = (query || "").trim().toLowerCase();
+      const box = document.getElementById("searchresults");
+      if (!q) {
+        box.className   = "empty";
+        box.textContent = "Type a query to search the sample catalogue.";
+        return;
+      }
+      const hits = DATA.catalog.filter(c =>
+        [c.item_type, c.subject, c.chapter, c.task_title, c.item_id]
+          .join(" ").toLowerCase().includes(q)
+      );
+      if (!hits.length) {
+        box.className   = "empty";
+        box.textContent = `No catalogue matches for "${q}". This prototype only searches the fictional sample catalogue (18 rows).`;
+        return;
+      }
+      box.className = "";
+      box.innerHTML = `<p class="muted">${hits.length} result${hits.length !== 1 ? "s" : ""} in sample catalogue:</p>` +
+        hits.map(c => {
+          const pillClass =
+            c.status === "Available" ? "pill pill-avail" :
+            c.status === "Deleted"   ? "pill pill-del"   : "pill pill-locked";
+          return `<div class="result">
+            <b>${esc(c.task_title || c.chapter || c.subject)}</b>
+            <span class="pill">${esc(c.item_type)}</span>
+            <span class="${pillClass}">${esc(c.status)}</span>
+            <div class="muted">${[c.subject, c.chapter, c.item_id].filter(Boolean).map(esc).join(" · ")}</div>
+            ${c.eligible_for_resume === "true" ? '<div class="muted" style="color:var(--ok)">✓ Eligible for resume</div>' : ""}
+          </div>`;
+        }).join("");
+    }
+
+    /* ─────────────────────────────────────
+       Main render orchestrator
+    ───────────────────────────────────── */
+    function render() {
+      document.getElementById("home").innerHTML      = homeHtml();
+      document.getElementById("progress").innerHTML  = progressHtml();
+      document.getElementById("chapters").innerHTML  = chaptersHtml();
+      document.getElementById("personal").innerHTML  = personalHtml();
+      document.getElementById("programme").innerHTML = programmeHtml();
+      document.getElementById("delivery").innerHTML  = deliveryHtml();
+
+      // Advisor caseload table
+      const ss = filteredStudents();
+      document.getElementById("studentrows").innerHTML = ss.length
+        ? ss.map(row => `<tr>
+            <td>${esc(row.s.student_id)}</td>
+            <td>${esc(row.s.cohort)}</td>
+            <td>${esc(row.s.advisor)}</td>
+            <td>${row.syllabus  == null ? "—" : row.syllabus  + "%"}</td>
+            <td>${row.readiness == null ? "—" : row.readiness + "%"}</td>
+            <td>${row.tasks     == null ? "—" : row.tasks     + "%"}</td>
+            <td>${esc(row.p[0] ? row.p[0].goal_status || "—" : "—")}</td>
+            <td>${esc(row.p[0] ? row.p[0].advisor_review_status || "—" : "—")}</td>
+          </tr>`).join("")
+        : `<tr><td colspan="8">No fictional students match these filters.</td></tr>`;
+
+      // Wire up study-action buttons (re-attached on each render)
+      document.querySelectorAll("[data-open]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const item  = catalogItem(btn.dataset.open);
+          const toast = document.getElementById("studytoast");
+          toast.hidden = false;
+          toast.textContent = item
+            ? `Prototype only: would open "${item.task_title || item.item_id}" (${item.subject}${item.chapter ? ", " + item.chapter : ""}). No live lesson player is connected.`
+            : "That task is unavailable in the sample catalogue.";
+        });
+      });
+    }
+
+    /* ─────────────────────────────────────
+       Tab switching
+    ───────────────────────────────────── */
+    document.querySelectorAll(".tabs button").forEach(b => {
+      b.addEventListener("click", () => {
+        document.querySelectorAll(".tabs button").forEach(x => {
+          x.classList.toggle("active", x === b);
+          x.setAttribute("aria-selected", x === b ? "true" : "false");
+        });
+        document.querySelectorAll(".view").forEach(x =>
+          x.classList.toggle("active", x.id === b.dataset.view)
+        );
+        if (b.dataset.view === "search") {
+          document.getElementById("q").focus();
+        }
+      });
+    });
+
+    /* ─────────────────────────────────────
+       Boot
+    ───────────────────────────────────── */
+    (async function init() {
+      const status = document.getElementById("status");
+      try {
+        DATA = await D.loadStudentData();
+
+        // Populate persona selector with scenario labels
+        const SCENARIO_LABELS = {
+          "STU-001": "STU-001 · resume = priority (one button)",
+          "STU-002": "STU-002 · resume + switch to priority",
+          "STU-003": "STU-003 · all completed → start priority",
+          "STU-004": "STU-004 · stale checkpoint → start priority",
+          "STU-005": "STU-005 · deleted + locked → no resume",
+          "STU-006": "STU-006 · no previous activity",
+          "STU-007": "STU-007 · Trial · completed activity",
+          "STU-008": "STU-008 · new student · unfinished",
+        };
+        const persona = document.getElementById("persona");
+        persona.innerHTML = DATA.students.map(s =>
+          `<option value="${esc(s.student_id)}">${SCENARIO_LABELS[s.student_id] || esc(s.student_id + " · " + s.display_name)}</option>`
+        ).join("");
+
+        status.hidden = true;
+        document.getElementById("app").hidden = false;
+
+        ["persona", "cohort", "advisor", "grain"].forEach(id =>
+          document.getElementById(id).addEventListener("change", render)
+        );
+        document.getElementById("searchform").addEventListener("submit", e => {
+          e.preventDefault();
+          renderSearch(document.getElementById("q").value);
+        });
+        document.getElementById("q").addEventListener("input", e => renderSearch(e.target.value));
+
+        render();
+      } catch (err) {
+        status.className = "error";
+        status.innerHTML = `<b>Could not load sample CSVs.</b> ${esc(err.message)}
+          <br>From the project folder run <code>python -m http.server 8080</code> then open
+          <code>http://localhost:8080/dashboards/student_dashboard.html</code>.
+          Opening the HTML file directly usually fails because browsers block local CSV fetch.`;
+      }
+    })();
+  </script>
+</body>
+</html>

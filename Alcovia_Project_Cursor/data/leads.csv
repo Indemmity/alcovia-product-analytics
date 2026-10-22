@@ -1,0 +1,13 @@
+﻿lead_id,created_at,source,campaign_id,is_qualified,current_stage,outcome
+LEAD-001,2026-08-03 10:15:00,Meta Ads,META-PROG-01,true,Discovery call set,In progress
+LEAD-002,2026-08-05 12:00:00,Organic,,true,Enrolled,Enrolled
+LEAD-003,2026-08-09 09:20:00,Referral,,false,New lead,Open
+LEAD-004,2026-08-12 15:45:00,Meta Ads,META-PROG-02,true,Dropped,Dropped
+LEAD-005,2026-09-02 11:30:00,Workshop,META-WORK-01,true,Enrolled,Enrolled
+LEAD-006,2026-09-10 16:10:00,Organic,,true,Discovery call attended,In progress
+LEAD-007,2026-09-18 13:00:00,Meta Ads,META-WORK-02,false,Qualified,Open
+LEAD-008,2026-10-02 10:00:00,Referral,,true,Architect session,In progress
+LEAD-009,2026-10-08 14:25:00,Meta Ads,META-PROG-01,true,Enrolled,Enrolled
+LEAD-010,2026-10-13 09:40:00,Organic,,false,New lead,Open
+LEAD-011,2026-10-15 11:00:00,Meta Ads,META-WORK-01,true,Discovery call set,In progress
+LEAD-012,2026-10-18 09:05:00,Workshop,META-WORK-02,true,Enrolled,Enrolled

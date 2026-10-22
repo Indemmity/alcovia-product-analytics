@@ -1,0 +1,12 @@
+﻿activity_id,student_id,activity_date,activity_type,task_id,subject,chapter,task_title,started_at,completed_at,duration_seconds,checkpoint_seconds,last_checkpoint_at,status,priority_rank,deleted,locked,stale,source_system
+1,STU-001,2026-10-17,Study chapter,TASK-101,Mathematics,Linear equations,Practice: two-step equations,2026-10-17 16:00:00,2026-10-17 16:25:00,1500,1500,2026-10-17 16:25:00,Completed,2,false,false,false,Fictional sample
+2,STU-001,2026-10-21,Practice quiz,TASK-102,Mathematics,Linear equations,Quiz: linear equations,2026-10-21 18:10:00,,720,480,2026-10-21 18:22:00,Started,3,false,false,false,Fictional sample
+3,STU-002,2026-10-20,Study chapter,TASK-101,Mathematics,Linear equations,Practice: two-step equations,2026-10-20 19:00:00,,400,120,2026-10-20 19:08:00,Started,2,false,false,false,Fictional sample
+4,STU-002,2026-10-21,Practice quiz,TASK-201,English,Reading comprehension,Annotate unseen passage,2026-10-21 17:00:00,,900,360,2026-10-21 17:12:00,Started,4,false,false,false,Fictional sample
+5,STU-003,2026-10-18,Study chapter,TASK-301,Science,Forces and motion,Lab recap: unbalanced forces,2026-10-18 15:00:00,2026-10-18 15:40:00,2400,2400,2026-10-18 15:40:00,Completed,1,false,false,false,Fictional sample
+6,STU-003,2026-10-19,Practice quiz,TASK-102,Mathematics,Linear equations,Quiz: linear equations,2026-10-19 10:00:00,2026-10-19 10:18:00,1080,1080,2026-10-19 10:18:00,Completed,3,false,false,false,Fictional sample
+7,STU-004,2026-10-18,Study planner,TASK-401,Humanities,Civic institutions,Short notes: local government,2026-10-18 16:00:00,,600,90,2026-10-04 16:10:00,Started,6,false,false,true,Fictional sample
+8,STU-005,2026-10-16,Study chapter,TASK-GONE,English,Reading comprehension,Retired worksheet,2026-10-16 11:00:00,,300,60,2026-10-16 11:05:00,Started,8,true,false,false,Fictional sample
+9,STU-005,2026-10-19,Practice quiz,TASK-LOCK,Science,Forces and motion,Locked extension pack,2026-10-19 13:00:00,,180,20,2026-10-19 13:03:00,Started,7,false,true,false,Fictional sample
+10,STU-007,2026-10-20,Study chapter,TASK-501,Mathematics,Fractions,Checkpoint: mixed numbers,2026-10-20 15:00:00,2026-10-20 15:20:00,1200,1200,2026-10-20 15:20:00,Completed,5,false,false,false,Fictional sample
+11,STU-008,2026-10-21,Study chapter,TASK-201,English,Reading comprehension,Annotate unseen passage,2026-10-21 09:00:00,,540,200,2026-10-21 09:09:00,Started,4,false,false,false,Fictional sample

@@ -1,0 +1,11 @@
+session_id,session_type,scheduled_at,conducted_at,advisor_id,cohort,status
+SES-001,Advisor session,2026-10-16 10:00:00,2026-10-16 10:05:00,Advisor 1,Cohort A,Conducted
+SES-002,Advisor session,2026-10-16 11:00:00,2026-10-16 11:00:00,Advisor 2,Cohort B,Conducted
+SES-003,Advisor session,2026-10-20 10:00:00,,Advisor 1,Cohort A,Missed
+SES-004,Daily quiz,2026-10-21 08:00:00,2026-10-21 08:00:00,Advisor 1,Cohort A,Conducted
+SES-005,Daily quiz,2026-10-21 08:00:00,2026-10-21 08:00:00,Advisor 2,Cohort B,Conducted
+SES-006,Career workshop,2026-10-18 15:00:00,2026-10-18 15:10:00,Advisor 1,Cohort A,Conducted
+SES-007,Career workshop,2026-10-25 15:00:00,,Advisor 2,Cohort B,Scheduled
+SES-008,Academic review,2026-10-19 16:00:00,2026-10-19 16:00:00,Advisor 1,Cohort A,Conducted
+SES-009,Peer session,2026-10-17 17:00:00,2026-10-17 17:00:00,Advisor 2,Cohort B,Conducted
+SES-010,Mentor call,2026-10-22 12:00:00,,Advisor 1,Cohort A,Scheduled

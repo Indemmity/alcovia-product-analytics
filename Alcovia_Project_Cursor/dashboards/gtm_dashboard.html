@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alcovia GTM Dashboard — Fictional prototype</title>
+  <style>
+    :root { --bg:#f5f7fb; --card:#fff; --ink:#172b4d; --muted:#667085; --line:#e5eaf2; --accent:#177e89; --warn:#8a5a00; --danger:#9b1c1c; --ok:#0f6b4c; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); font: 14px/1.45 Inter, system-ui, Arial; color: var(--ink); }
+    header { padding: 22px 26px; background: #17324d; color: #fff; }
+    header h1 { margin: 0 0 5px; font-size: 23px; }
+    header p { margin: 0; color: #d5e1ed; }
+    .wrap { max-width: 1200px; margin: auto; padding: 22px; }
+    .notice, .error, .empty { padding: 10px 13px; border-radius: 10px; margin-bottom: 16px; }
+    .notice { background: #fff4d6; border: 1px solid #f0d58a; color: #684d0a; }
+    .error { background: #fdecec; border: 1px solid #f0b4b4; color: var(--danger); }
+    .empty { background: #eef4f8; border: 1px solid var(--line); color: var(--muted); }
+    .controls, .cards, .grid { display: grid; gap: 14px; }
+    .controls { grid-template-columns: repeat(3, minmax(160px, 1fr)); background: #fff; padding: 14px; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 16px; }
+    .controls label { display: block; color: var(--muted); font-size: 12px; margin-bottom: 5px; }
+    select, button { font: inherit; }
+    select { width: 100%; padding: 9px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--ink); }
+    .cards { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 16px; }
+    .cards.five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .card, .panel { background: var(--card); border: 1px solid var(--line); border-radius: 13px; padding: 16px; box-shadow: 0 2px 5px #12233b08; }
+    .klabel { color: var(--muted); font-size: 12px; }
+    .value { font-size: 25px; font-weight: 750; margin: 7px 0; }
+    .sub { font-size: 12px; color: var(--muted); }
+    .grid { grid-template-columns: 1.1fr .9fr; margin-bottom: 15px; }
+    .panel h2 { font-size: 15px; margin: 0 0 12px; }
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+    .tabs button { border: 1px solid var(--line); border-radius: 8px; padding: 9px 13px; background: #fff; color: var(--ink); cursor: pointer; }
+    .tabs button.active { background: var(--ink); color: #fff; }
+    .tabs button:focus-visible { outline: 3px solid #79c2c8; outline-offset: 2px; }
+    .view { display: none; }
+    .view.active { display: block; }
+    table { border-collapse: collapse; width: 100%; font-size: 12px; }
+    th, td { text-align: left; padding: 9px 7px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { color: var(--muted); font-weight: 600; }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .barrow { display: grid; grid-template-columns: 150px 1fr 90px; gap: 8px; align-items: center; margin: 12px 0; font-size: 12px; }
+    .bar { height: 9px; background: #e8eef3; border-radius: 9px; overflow: hidden; }
+    .bar span { display: block; height: 100%; background: var(--accent); border-radius: 9px; }
+    .foot { color: var(--muted); font-size: 11px; margin-top: 18px; }
+    .flag { color: var(--warn); font-weight: 600; }
+    .muted { color: var(--muted); }
+    code { font-size: 12px; background: #eef2f6; padding: 1px 5px; border-radius: 4px; }
+    @media (max-width: 800px) {
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .grid, .controls { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 450px) { .cards { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Alcovia · GTM &amp; Revenue</h1>
+    <p>Interactive assessment prototype · fictional sample CSV data · demo as-of 22 Oct 2026</p>
+  </header>
+  <main class="wrap">
+    <div class="notice"><b>Dummy data notice:</b> Every number is calculated from the fictional files in <code>data/</code>. This is not Alcovia’s actual performance and is not connected to ClickUp, Meta Ads, Razorpay or any production system.</div>
+    <div id="status" class="empty" role="status">Loading sample CSVs… Open this page via a local HTTP server so the files can be read.</div>
+    <div id="app" hidden>
+      <div class="controls">
+        <div>
+          <label for="period">Reporting period</label>
+          <select id="period">
+            <option value="30">Last 30 days (23 Sep–22 Oct 2026)</option>
+            <option value="60">Last 60 days (24 Aug–22 Oct 2026)</option>
+            <option value="90" selected>Last 90 days (24 Jul–22 Oct 2026)</option>
+            <option value="all">All sample months (Aug–Oct 2026)</option>
+          </select>
+        </div>
+        <div>
+          <label for="type">Revenue type</label>
+          <select id="type">
+            <option value="All">All types</option>
+            <option value="Program">Full programme</option>
+            <option value="Workshop">Workshop</option>
+            <option value="Trial">Trial</option>
+          </select>
+        </div>
+        <div>
+          <label for="channel">Lead source</label>
+          <select id="channel">
+            <option value="All">All sources</option>
+            <option value="Meta Ads">Meta Ads</option>
+            <option value="Organic">Organic</option>
+            <option value="Referral">Referral</option>
+            <option value="Workshop">Workshop</option>
+          </select>
+        </div>
+      </div>
+      <div class="tabs" role="tablist">
+        <button class="active" data-view="overview" role="tab" aria-selected="true">Executive overview</button>
+        <button data-view="funnel" role="tab" aria-selected="false">Lead funnel</button>
+        <button data-view="campaigns" role="tab" aria-selected="false">Campaigns</button>
+        <button data-view="revenue" role="tab" aria-selected="false">Revenue &amp; follow-ups</button>
+        <button data-view="defs" role="tab" aria-selected="false">Metric definitions</button>
+      </div>
+      <section id="overview" class="view active">
+        <div class="cards" id="kpis"></div>
+        <div class="grid">
+          <div class="panel">
+            <h2>Collected revenue by month</h2>
+            <div id="revmonth"></div>
+            <p class="sub">Paid transactions only. Net = gross − refund. Failed/pending payments are excluded, not treated as zero collected revenue.</p>
+          </div>
+          <div class="panel">
+            <h2>Programme mix in the selected period</h2>
+            <div id="mix"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <h2>Data-quality signals</h2>
+          <div id="signals"></div>
+        </div>
+        <div class="panel">
+          <h2>Outstanding invoices &amp; trial renewals</h2>
+          <div id="overview-followups"></div>
+        </div>
+      </section>
+      <section id="funnel" class="view">
+        <div class="cards five" id="funnelkpis"></div>
+        <div class="panel">
+          <h2>Cohort funnel (leads created in the selected period)</h2>
+          <div id="funnelbars"></div>
+          <p class="sub">Denominator is distinct leads created in-period, after the source filter. A lead is counted at a stage if they have at least one matching stage event. Drop-off is leads who reached a stage and never reached the next stage in the ordered path.</p>
+        </div>
+        <div class="panel">
+          <h2>Stage conversion and drop-off</h2>
+          <div id="funneltable"></div>
+        </div>
+      </section>
+      <section id="campaigns" class="view">
+        <div class="cards" id="campaignkpis"></div>
+        <div class="panel">
+          <h2>Campaign comparison</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Campaign</th>
+                <th>Type</th>
+                <th class="num">Spend</th>
+                <th class="num">CTR</th>
+                <th class="num">Frequency</th>
+                <th class="num">Click→visit</th>
+                <th class="num">Qualified leads</th>
+                <th class="num">Cost / QL</th>
+                <th>Landing-page flag</th>
+              </tr>
+            </thead>
+            <tbody id="campaigntable"></tbody>
+          </table>
+          <p class="sub">Click→visit below 70% is flagged as a possible landing-page issue (heuristic for this prototype, not a proven diagnosis). Frequency is impression-weighted. Campaign daily lead counts are not added to CRM lead counts.</p>
+        </div>
+      </section>
+      <section id="revenue" class="view">
+        <div class="cards" id="revenuekpis"></div>
+        <div class="grid">
+          <div class="panel">
+            <h2>Revenue vs monthly target</h2>
+            <div id="targets"></div>
+            <p class="sub">Targets are monthly. Actuals are paid net collected in the same month. Months with no paid rows show 0 collected, which is a genuine zero in this sample. Missing target rows would show as unavailable, not 0%.</p>
+          </div>
+          <div class="panel">
+            <h2>Unpaid and part-paid invoices</h2>
+            <div id="invoices"></div>
+            <h2 style="margin-top:20px">Upcoming trial renewals (next 21 days from as-of date)</h2>
+            <div id="renewals"></div>
+          </div>
+        </div>
+      </section>
+      <section id="defs" class="view">
+        <div class="panel">
+          <h2>How these numbers are calculated</h2>
+          <ul>
+            <li><b>Collected revenue:</b> sum of <code>gross_amount_inr − refund_inr</code> where <code>payment_status = Paid</code> and <code>paid_at</code> is in the period. Null refund is treated as unknown and that row is excluded from net collected rather than forced to zero.</li>
+            <li><b>Target:</b> sum of monthly <code>target_amount_inr</code> for months that overlap the selected period, filtered by revenue type.</li>
+            <li><b>Variance:</b> collected revenue minus target. Positive = above target, negative = below target.</li>
+            <li><b>Achievement %:</b> collected ÷ target. Not annualised.</li>
+            <li><b>Average journey time:</b> mean days from "New lead" stage event to "Enrolled" stage event, counting only leads that reached Enrolled. Calculated from <code>lead_stage_events</code> timestamps.</li>
+            <li><b>Workshop seats:</b> for paid workshop rows, seats = gross ÷ ₹3,999 when that divides evenly. Pending workshop payments are not counted as seats or revenue.</li>
+            <li><b>Trials vs full programmes:</b> payment <code>revenue_type</code> and enrollment <code>program_type</code>. These can differ; the overview cards use payments for money and enrollments for headcount.</li>
+            <li><b>Funnel conversion:</b> distinct leads created in-period who reached stage N ÷ distinct leads created in-period who reached stage N−1. Paid conversion uses the Enrolled stage, not a separate payments join, so payment failures are visible as data-quality notes instead of silent funnel inflation.</li>
+            <li><b>CTR:</b> clicks ÷ impressions when impressions &gt; 0, else unavailable.</li>
+            <li><b>Cost per qualified lead:</b> spend ÷ campaign <code>qualified_leads</code> when that count &gt; 0, else unavailable. This uses ads-platform qualified counts, not the CRM <code>is_qualified</code> flag.</li>
+            <li><b>Outstanding invoices:</b> <code>max(invoice_amount − paid_amount, 0)</code> where invoice amount &gt; paid amount. Invoice paid amounts are not assumed to equal the payments table; mismatches are listed as reconciliation items.</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+    <p class="foot">Prototype status: local HTML reading fictional CSVs. No live integrations, authentication, or public hosting unless you publish it yourself. Confirm KPI definitions with Alcovia before any production use.</p>
+  </main>
+  <script src="data_loader.js"></script>
+  <script>
+    const D = window.AlcoviaData;
+    const money = (n) => n == null ? "—" : "₹" + Math.round(n).toLocaleString("en-IN");
+    const pct   = (n) => (n == null || !Number.isFinite(n) || Number.isNaN(n)) ? "—" : (n * 100).toFixed(1) + "%";
+    const fmt   = (n, d = 1) => (n == null || !Number.isFinite(n) || Number.isNaN(n)) ? "—" : Number(n).toFixed(d);
+    const STAGES = ["New lead", "Qualified", "Discovery call set", "Discovery call attended", "Ambition interview", "Architect session", "Enrolled"];
+    let DATA = null;
+
+    function card(label, val, sub) {
+      return `<div class="card"><div class="klabel">${label}</div><div class="value">${val}</div><div class="sub">${sub || "Fictional sample"}</div></div>`;
+    }
+    function periodWindow() {
+      const asOf = D.AS_OF_DATE;
+      const value = document.getElementById("period").value;
+      if (value === "all") return { start: "2026-08-01", end: asOf, label: "All sample months" };
+      const days = Number(value);
+      return { start: D.addDays(asOf, -(days - 1)), end: asOf, label: "Last " + days + " days" };
+    }
+    function campaignTypeById(rows) {
+      const map = {};
+      rows.forEach((r) => { map[r.campaign_id] = r.revenue_type; });
+      return map;
+    }
+    function netPaid(p) {
+      const gross = D.toNumber(p.gross_amount_inr);
+      const refund = D.toNumber(p.refund_inr);
+      if (p.payment_status !== "Paid") return null;
+      if (gross == null || refund == null) return null;
+      return gross - refund;
+    }
+    function workshopSeats(p) {
+      const gross = D.toNumber(p.gross_amount_inr);
+      if (p.payment_status !== "Paid" || p.revenue_type !== "Workshop" || gross == null) return null;
+      if (gross % D.WORKSHOP_SEAT_INR !== 0) return null;
+      return gross / D.WORKSHOP_SEAT_INR;
+    }
+
+    function render() {
+      const type = document.getElementById("type").value;
+      const channel = document.getElementById("channel").value;
+      const { start, end } = periodWindow();
+      const campType = campaignTypeById(DATA.campaigns);
+
+      const payments = DATA.payments.filter((p) => {
+        const day = D.isoDate(p.paid_at);
+        if (!D.inRange(day, start, end)) return false;
+        if (type !== "All" && p.revenue_type !== type) return false;
+        return true;
+      });
+      const collectedRows = payments.map((p) => ({ p, net: netPaid(p) })).filter((x) => x.net != null);
+      const collected = collectedRows.reduce((s, x) => s + x.net, 0);
+      const unknownNet = payments.filter((p) => p.payment_status === "Paid" && netPaid(p) == null).length;
+
+      const campaigns = DATA.campaigns.filter((r) => {
+        if (!D.inRange(r.metric_date, start, end)) return false;
+        if (type !== "All" && r.revenue_type !== type) return false;
+        return true;
+      });
+      const spend = campaigns.reduce((s, r) => s + (D.toNumber(r.spend_inr) || 0), 0);
+      const impressions = campaigns.reduce((s, r) => s + (D.toNumber(r.impressions) || 0), 0);
+      const clicks = campaigns.reduce((s, r) => s + (D.toNumber(r.clicks) || 0), 0);
+      const visits = campaigns.reduce((s, r) => s + (D.toNumber(r.landing_page_visits) || 0), 0);
+      const qlAds = campaigns.reduce((s, r) => s + (D.toNumber(r.qualified_leads) || 0), 0);
+      const freqNum = campaigns.reduce((s, r) => s + (D.toNumber(r.frequency) || 0) * (D.toNumber(r.impressions) || 0), 0);
+
+      const cohortLeads = DATA.leads.filter((l) => {
+        const day = D.isoDate(l.created_at);
+        if (!D.inRange(day, start, end)) return false;
+        if (channel !== "All" && l.source !== channel) return false;
+        if (type !== "All") {
+          if (!l.campaign_id) return false;
+          if (campType[l.campaign_id] !== type) return false;
+        }
+        return true;
+      });
+      const cohortIds = new Set(cohortLeads.map((l) => l.lead_id));
+      const events = DATA.events.filter((e) => cohortIds.has(e.lead_id));
+
+      const reached = {};
+      STAGES.forEach((s) => { reached[s] = new Set(); });
+      events.forEach((e) => { if (reached[e.stage]) reached[e.stage].add(e.lead_id); });
+      const dropped = new Set(events.filter((e) => e.stage === "Dropped").map((e) => e.lead_id));
+
+      const enrollments = DATA.enrollments.filter((e) => {
+        const day = D.isoDate(e.enrollment_date);
+        if (!D.inRange(day, start, end)) return false;
+        if (type === "Program" && e.program_type !== "Full programme") return false;
+        if (type === "Workshop" && e.program_type !== "Workshop") return false;
+        if (type === "Trial" && e.program_type !== "Trial") return false;
+        return true;
+      });
+
+      const seats = payments.map(workshopSeats).filter((n) => n != null).reduce((s, n) => s + n, 0);
+      const trialPay = collectedRows.filter((x) => x.p.revenue_type === "Trial").reduce((s, x) => s + x.net, 0);
+      const progPay = collectedRows.filter((x) => x.p.revenue_type === "Program").reduce((s, x) => s + x.net, 0);
+      const workPay = collectedRows.filter((x) => x.p.revenue_type === "Workshop").reduce((s, x) => s + x.net, 0);
+
+      document.getElementById("kpis").innerHTML = [
+        card("Collected revenue", money(collected), "Paid net of refunds · " + start + " to " + end),
+        card("Ad spend", money(spend), "Campaign daily sample in period"),
+        card("CRM qualified leads", String(cohortLeads.filter((l) => l.is_qualified === "true").length), "Distinct leads created in period"),
+        card("Cost / ads qualified lead", qlAds > 0 ? money(spend / qlAds) : "—", qlAds > 0 ? "Spend ÷ campaign qualified_leads" : "Unavailable: no campaign qualified leads"),
+      ].join("");
+
+      const byMonth = {};
+      collectedRows.forEach((x) => {
+        const m = D.isoDate(x.p.paid_at).slice(0, 7);
+        byMonth[m] = (byMonth[m] || 0) + x.net;
+      });
+      const months = Object.keys(byMonth).sort();
+      const maxM = Math.max(1, ...months.map((m) => byMonth[m]));
+      document.getElementById("revmonth").innerHTML = months.length
+        ? months.map((m) => `<div class="barrow"><span>${m}</span><div class="bar"><span style="width:${byMonth[m] / maxM * 100}%"></span></div><b>${money(byMonth[m])}</b></div>`).join("")
+        : `<div class="empty">No paid sample payments in this period.</div>`;
+
+      // Explicit label→filter map so revenue-type filter is unambiguous
+      const MIX_TYPE_MAP = { "Full programme": "Program", "Workshop": "Workshop", "Trial": "Trial" };
+      const mix = [
+        ["Full programme", progPay],
+        ["Workshop", workPay],
+        ["Trial", trialPay],
+      ].filter((row) => type === "All" || MIX_TYPE_MAP[row[0]] === type);
+      const mixTotal = mix.reduce((s, x) => s + x[1], 0);
+      document.getElementById("mix").innerHTML = mix.map((x) => `<div class="barrow"><span>${x[0]}</span><div class="bar"><span style="width:${mixTotal ? x[1] / mixTotal * 100 : 0}%"></span></div><b>${money(x[1])}</b></div>`).join("")
+        + `<p class="sub">Enrollments in period: ${enrollments.filter((e) => e.program_type === "Full programme").length} full programme, ${enrollments.filter((e) => e.program_type === "Trial").length} trial, ${enrollments.filter((e) => e.program_type === "Workshop").length} workshop. Paid workshop seats (₹${D.WORKSHOP_SEAT_INR.toLocaleString("en-IN")} each): ${seats || "—"}.</p>`;
+
+      const invoiceOut = DATA.invoices.map((inv) => {
+        const amt = D.toNumber(inv.invoice_amount_inr);
+        const paid = D.toNumber(inv.paid_amount_inr);
+        const outstanding = amt != null && paid != null ? Math.max(amt - paid, 0) : null;
+        return { inv, outstanding };
+      }).filter((x) => x.outstanding != null && x.outstanding > 0);
+
+      document.getElementById("signals").innerHTML = `
+        <p>• ${cohortLeads.length} fictional leads were created in this period after filters.</p>
+        <p>• ${dropped.size} of those leads have a Dropped stage event.</p>
+        <p>• ${unknownNet} paid payment row(s) have a missing refund and are excluded from collected revenue (missing ≠ 0).</p>
+        <p>• Invoice outstanding total is ${money(invoiceOut.reduce((s, x) => s + x.outstanding, 0))}. INV-SAMPLE-001 is part-paid on the invoice even though PAY-001 is a full programme payment — treat this as a reconciliation example, not as silently combined revenue.</p>
+        <p class="flag">• Campaign qualified-lead totals are daily ad metrics and must not be added to CRM lead counts.</p>`;
+      
+      const renewUntil = D.addDays(D.AS_OF_DATE, 21);
+      const renewals = DATA.enrollments.filter((e) =>
+        e.program_type === "Trial" && e.renewal_date && e.renewal_date >= D.AS_OF_DATE && e.renewal_date <= renewUntil
+      );
+      document.getElementById("overview-followups").innerHTML = `
+        <p><b>Outstanding invoices:</b> ${money(invoiceOut.reduce((s, x) => s + x.outstanding, 0))} across ${invoiceOut.length} invoice${invoiceOut.length !== 1 ? "s" : ""}</p>
+        <p><b>Trial renewals (next 21 days):</b> ${renewals.length} renewal${renewals.length !== 1 ? "s" : ""} due${renewals.length > 0 ? ": " + renewals.map(e => e.enrollment_id + " (" + e.renewal_date + ")").join(", ") : ""}</p>
+      `;
+
+      const stageCounts = STAGES.map((s) => reached[s].size);
+      
+      // Calculate average journey time (days from New lead to Enrolled)
+      const enrolledLeads = Array.from(reached["Enrolled"]);
+      let avgJourneyDays = null;
+      if (enrolledLeads.length > 0) {
+        const journeys = enrolledLeads.map(leadId => {
+          const newLeadEvent = events.find(e => e.lead_id === leadId && e.stage === "New lead");
+          const enrolledEvent = events.find(e => e.lead_id === leadId && e.stage === "Enrolled");
+          if (!newLeadEvent || !enrolledEvent) return null;
+          const start = D.parseDate(newLeadEvent.occurred_at);
+          const end = D.parseDate(enrolledEvent.occurred_at);
+          if (!start || !end) return null;
+          return (end - start) / (1000 * 60 * 60 * 24); // milliseconds to days
+        }).filter(d => d != null && d >= 0);
+        if (journeys.length > 0) {
+          avgJourneyDays = Math.round(journeys.reduce((a, b) => a + b, 0) / journeys.length);
+        }
+      }
+      
+      document.getElementById("funnelkpis").innerHTML = [
+        card("Cohort leads", String(cohortLeads.length), "Created in period"),
+        card("Reached Qualified", String(stageCounts[1]), "Distinct leads"),
+        card("Qualification rate", pct(cohortLeads.length ? stageCounts[1] / cohortLeads.length : null), "Qualified ÷ cohort"),
+        card("Enrolled / cohort", pct(cohortLeads.length ? stageCounts[6] / cohortLeads.length : null), "Enrolled stage, not payments"),
+        card("Avg. journey time", avgJourneyDays != null ? String(avgJourneyDays) + " days" : "—", "New lead → Enrolled (enrolled leads only)"),
+      ].join("");
+
+      const maxStage = Math.max(1, ...stageCounts);
+      document.getElementById("funnelbars").innerHTML = cohortLeads.length
+        ? STAGES.map((s, i) => `<div class="barrow"><span>${s}</span><div class="bar"><span style="width:${stageCounts[i] / maxStage * 100}%"></span></div><b>${stageCounts[i]}</b></div>`).join("")
+        : `<div class="empty">No cohort leads in this period after the current filters.</div>`;
+
+      document.getElementById("funneltable").innerHTML = `<table><thead><tr><th>From</th><th>To</th><th class="num">Reached from</th><th class="num">Reached to</th><th class="num">Conversion</th><th class="num">Drop-off</th></tr></thead><tbody>${
+        STAGES.slice(0, -1).map((from, i) => {
+          const to = STAGES[i + 1];
+          const a = stageCounts[i];
+          const b = stageCounts[i + 1];
+          const drop = a - b;
+          return `<tr><td>${from}</td><td>${to}</td><td class="num">${a}</td><td class="num">${b}</td><td class="num">${pct(a ? b / a : null)}</td><td class="num">${a ? drop : "—"}</td></tr>`;
+        }).join("")
+      }</tbody></table>`;
+
+      const grouped = {};
+      campaigns.forEach((r) => {
+        const key = r.campaign_id;
+        if (!grouped[key]) grouped[key] = { id: key, name: r.campaign_name, type: r.revenue_type, spend: 0, imps: 0, clicks: 0, visits: 0, ql: 0, freqW: 0 };
+        const g = grouped[key];
+        g.spend += D.toNumber(r.spend_inr) || 0;
+        g.imps += D.toNumber(r.impressions) || 0;
+        g.clicks += D.toNumber(r.clicks) || 0;
+        g.visits += D.toNumber(r.landing_page_visits) || 0;
+        g.ql += D.toNumber(r.qualified_leads) || 0;
+        g.freqW += (D.toNumber(r.frequency) || 0) * (D.toNumber(r.impressions) || 0);
+      });
+      const campList = Object.values(grouped);
+      const ctr = impressions > 0 ? clicks / impressions : null;
+      const avgFreq = impressions > 0 ? freqNum / impressions : null;
+      document.getElementById("campaignkpis").innerHTML = [
+        card("Campaign rows", campaigns.length ? String(campaigns.length) : "—", campaigns.length ? "Daily facts in period" : "No campaign rows in this period"),
+        card("Spend", money(campaigns.length ? spend : null), "Sum of spend_inr"),
+        card("CTR", pct(ctr), "Clicks ÷ impressions"),
+        card("Weighted frequency", fmt(avgFreq, 2), "Weighted by impressions"),
+      ].join("");
+      document.getElementById("campaigntable").innerHTML = campList.length ? campList.map((c) => {
+        const clickVisit = c.clicks > 0 ? c.visits / c.clicks : null;
+        const lpIssue = clickVisit != null && clickVisit < 0.7;
+        const freq = c.imps > 0 ? c.freqW / c.imps : null;
+        const highFreq = freq != null && freq >= 3.5;
+        const cpql = c.ql > 0 ? c.spend / c.ql : null;
+        const flag = [lpIssue ? "Low click→visit" : null, highFreq ? "High frequency" : null].filter(Boolean).join("; ") || "None";
+        return `<tr>
+          <td>${c.name}<div class="muted">${c.id}</div></td>
+          <td>${c.type}</td>
+          <td class="num">${money(c.spend)}</td>
+          <td class="num">${pct(c.imps > 0 ? c.clicks / c.imps : null)}</td>
+          <td class="num">${fmt(freq, 2)}</td>
+          <td class="num">${pct(clickVisit)}</td>
+          <td class="num">${c.ql}</td>
+          <td class="num">${cpql == null ? "—" : money(cpql)}</td>
+          <td class="${lpIssue || highFreq ? "flag" : ""}">${flag}</td>
+        </tr>`;
+      }).join("") : `<tr><td colspan="9">No campaign daily rows in this period.</td></tr>`;
+
+      const targetRows = DATA.targets.filter((t) => {
+        const monthEnd = t.target_month.slice(0, 8) + "28";
+        if (monthEnd < start || t.target_month > end) return false;
+        if (type !== "All" && t.revenue_type !== type) return false;
+        return true;
+      });
+      const targetTotal = targetRows.reduce((s, t) => s + (D.toNumber(t.target_amount_inr) || 0), 0);
+      const achievement = targetTotal > 0 ? collected / targetTotal : null;
+      const variance = targetTotal > 0 ? collected - targetTotal : null;
+      document.getElementById("revenuekpis").innerHTML = [
+        card("Collected revenue", money(collected), "Paid net · " + start + " to " + end),
+        card("Target (overlapping months)", targetTotal > 0 ? money(targetTotal) : "—", "Sum of monthly targets in period"),
+        card("Variance", variance != null ? money(variance) : "—", variance != null && variance < 0 ? "Below target" : variance != null && variance > 0 ? "Above target" : "No target data"),
+        card("Achievement %", pct(achievement), "Collected ÷ target · not annualised"),
+      ].join("");
+
+      const monthKeys = [...new Set(targetRows.map((t) => t.target_month))].sort();
+      document.getElementById("targets").innerHTML = monthKeys.map((m) => {
+        const tSum = targetRows.filter((t) => t.target_month === m).reduce((s, t) => s + (D.toNumber(t.target_amount_inr) || 0), 0);
+        const aSum = collectedRows.filter((x) => D.isoDate(x.p.paid_at).slice(0, 7) === m.slice(0, 7)).reduce((s, x) => s + x.net, 0);
+        const ratio = tSum > 0 ? aSum / tSum : null;
+        return `<div class="barrow"><span>${m.slice(0, 7)}</span><div class="bar"><span style="width:${Math.min(100, (ratio || 0) * 100)}%"></span></div><b>${pct(ratio)}</b></div><div class="sub">Actual ${money(aSum)} / target ${money(tSum)}</div>`;
+      }).join("") || `<div class="empty">No target rows overlap this period.</div>`;
+
+      document.getElementById("invoices").innerHTML = invoiceOut.length
+        ? `<table><thead><tr><th>Invoice</th><th>Lead</th><th>Due</th><th class="num">Outstanding</th><th>Status</th></tr></thead><tbody>${
+          invoiceOut.map((x) => `<tr><td>${x.inv.invoice_id}</td><td>${x.inv.lead_id}</td><td>${x.inv.due_at}</td><td class="num">${money(x.outstanding)}</td><td>${x.inv.status}</td></tr>`).join("")
+        }</tbody></table>`
+        : `<div class="empty">No unpaid sample invoices.</div>`;
+
+      document.getElementById("renewals").innerHTML = renewals.length
+        ? `<table><thead><tr><th>Enrollment</th><th>Student</th><th>Renewal date</th><th>Status</th></tr></thead><tbody>${
+          renewals.map((e) => `<tr><td>${e.enrollment_id}</td><td>${e.student_id}</td><td>${e.renewal_date}</td><td>${e.status}</td></tr>`).join("")
+        }</tbody></table>`
+        : `<div class="empty">No fictional trial renewals in the next 21 days from ${D.AS_OF_DATE}.</div>`;
+    }
+
+    document.querySelectorAll(".tabs button").forEach((b) => {
+      b.addEventListener("click", () => {
+        document.querySelectorAll(".tabs button").forEach((x) => {
+          x.classList.toggle("active", x === b);
+          x.setAttribute("aria-selected", x === b ? "true" : "false");
+        });
+        document.querySelectorAll(".view").forEach((x) => x.classList.toggle("active", x.id === b.dataset.view));
+      });
+    });
+
+    (async function init() {
+      const status = document.getElementById("status");
+      try {
+        DATA = await D.loadGtmData();
+        status.hidden = true;
+        document.getElementById("app").hidden = false;
+        ["period", "type", "channel"].forEach((id) => document.getElementById(id).addEventListener("change", render));
+        render();
+      } catch (err) {
+        status.className = "error";
+        status.innerHTML = `<b>Could not load sample CSVs.</b> ${err.message}. From the project folder run <code>python -m http.server 8080</code> and open <code>http://localhost:8080/dashboards/gtm_dashboard.html</code>. Opening the HTML file directly usually fails because browsers block local CSV fetch.`;
+      }
+    })();
+  </script>
+</body>
+</html>

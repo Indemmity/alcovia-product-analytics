@@ -1,0 +1,9 @@
+﻿student_id,display_name,cohort,enrollment_date,status,advisor,consent_status
+STU-001,Student A,Cohort A,2026-08-15,Active,Advisor 1,Fictional / not applicable
+STU-002,Student B,Cohort A,2026-08-22,Active,Advisor 2,Fictional / not applicable
+STU-003,Student C,Cohort B,2026-09-12,Active,Advisor 1,Fictional / not applicable
+STU-004,Student D,Cohort B,2026-09-20,Active,Advisor 2,Fictional / not applicable
+STU-005,Student E,Cohort A,2026-10-09,Active,Advisor 1,Fictional / not applicable
+STU-006,Student F,Cohort B,2026-10-17,Active,Advisor 2,Fictional / not applicable
+STU-007,Student G,Cohort A,2026-10-14,Trial,Advisor 2,Fictional / not applicable
+STU-008,Student H,Cohort B,2026-10-19,Active,Advisor 1,Fictional / not applicable

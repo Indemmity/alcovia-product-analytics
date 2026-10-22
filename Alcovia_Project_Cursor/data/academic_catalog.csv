@@ -1,0 +1,18 @@
+item_id,item_type,subject,chapter,task_title,priority_rank,status,eligible_for_resume
+SUB-MATH,Subject,Mathematics,,,99,Available,false
+SUB-ENG,Subject,English,,,99,Available,false
+SUB-SCI,Subject,Science,,,99,Available,false
+SUB-HUM,Subject,Humanities,,,99,Available,false
+CH-MATH-01,Chapter,Mathematics,Linear equations,,40,Available,false
+CH-MATH-02,Chapter,Mathematics,Fractions,,50,Available,false
+CH-ENG-01,Chapter,English,Reading comprehension,,45,Available,false
+CH-SCI-01,Chapter,Science,Forces and motion,,35,Available,false
+CH-HUM-01,Chapter,Humanities,Civic institutions,,55,Available,false
+TASK-101,Task,Mathematics,Linear equations,Practice: two-step equations,2,Available,true
+TASK-102,Task,Mathematics,Linear equations,Quiz: linear equations,3,Available,true
+TASK-201,Task,English,Reading comprehension,Annotate unseen passage,4,Available,true
+TASK-301,Task,Science,Forces and motion,Lab recap: unbalanced forces,1,Available,true
+TASK-401,Task,Humanities,Civic institutions,Short notes: local government,6,Available,true
+TASK-501,Task,Mathematics,Fractions,Checkpoint: mixed numbers,5,Available,true
+TASK-GONE,Task,English,Reading comprehension,Retired worksheet,8,Deleted,false
+TASK-LOCK,Task,Science,Forces and motion,Locked extension pack,7,Locked,false

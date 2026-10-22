@@ -1,0 +1,13 @@
+input_id,student_id,input_type,input_date,input_status,due_date,advisor_id,subject,action_required,notes
+ADV-001,STU-001,Weekly check-in,2026-10-20,Submitted,2026-10-20,Advisor 1,Progress review,None,Fictional sample · on schedule
+ADV-002,STU-001,Chapter review,2026-10-15,Submitted,2026-10-18,Advisor 1,Linear equations chapter readiness,None,Fictional sample
+ADV-003,STU-002,Weekly check-in,2026-10-21,Overdue,2026-10-20,Advisor 2,Progress review,Remind student,Fictional sample · overdue flag
+ADV-004,STU-002,Personal development review,2026-10-15,Submitted,2026-10-20,Advisor 2,Career milestones,Follow-up email sent,Fictional sample
+ADV-005,STU-003,Weekly check-in,2026-10-21,Submitted,2026-10-21,Advisor 1,Progress review,None,Fictional sample
+ADV-006,STU-003,Wellness check,2026-10-19,Submitted,2026-10-22,Advisor 1,Well-being and balance,None,Fictional sample
+ADV-007,STU-004,Weekly check-in,2026-10-20,Missing,2026-10-20,Advisor 2,Progress review,Schedule overdue input,Fictional sample · missing input flag
+ADV-008,STU-004,Chapter readiness,2026-10-18,Submitted,2026-10-21,Advisor 2,Humanities chapter,None,Fictional sample
+ADV-009,STU-005,Weekly check-in,2026-10-21,Submitted,2026-10-21,Advisor 1,Progress review,None,Fictional sample
+ADV-010,STU-005,Milestone progress,2026-10-15,Submitted,2026-10-20,Advisor 1,Career development,None,Fictional sample
+ADV-011,STU-006,Onboarding,2026-10-20,Submitted,2026-10-25,Advisor 2,First week orientation,Schedule first check-in,Fictional sample
+ADV-012,STU-006,Weekly check-in,2026-10-21,Missing,2026-10-21,Advisor 2,Initial progress,Schedule first check-in,Fictional sample

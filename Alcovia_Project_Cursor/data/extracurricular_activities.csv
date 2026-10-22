@@ -1,0 +1,13 @@
+activity_id,student_id,activity_type,activity_name,frequency,status,hours_commitment,advisor_notes,start_date,end_date,notes
+EXC-001,STU-001,Tutoring,Mathematics peer tutoring,Weekly,Active,2.0,Fictional sample · student excels in maths · helping others,2026-09-15,,Fictional sample
+EXC-002,STU-001,Sport,School basketball team,3x weekly,Active,4.0,Fictional sample · commitment vs study balance good,2026-09-01,,Fictional sample
+EXC-003,STU-002,Tutoring,English literature mentoring,Twice weekly,Inactive,1.5,Fictional sample · dropped due to revision needs,2026-08-20,2026-10-15,Fictional sample
+EXC-004,STU-002,Club,Debate society,Weekly,Active,1.5,Fictional sample · develops communication skills,2026-09-10,,Fictional sample
+EXC-005,STU-003,Volunteer,Community centre tutor,Weekly,Active,3.0,Fictional sample · strong commitment to service,2026-09-01,,Fictional sample
+EXC-006,STU-003,Sport,Swimming (competitive),4x weekly,Active,6.0,Fictional sample · high commitment · early morning sessions,2026-08-01,,Fictional sample
+EXC-007,STU-004,Club,Technology club,Fortnightly,Active,1.0,Fictional sample · new interest,2026-09-20,,Fictional sample
+EXC-008,STU-004,Tutoring,Science revision group,Weekly,Active,2.5,Fictional sample · peer-led study,2026-10-01,,Fictional sample
+EXC-009,STU-005,Volunteer,Local charity events,Monthly,Active,4.0,Fictional sample · enjoys community impact,2026-09-15,,Fictional sample
+EXC-010,STU-005,Club,Music ensemble,Twice weekly,Active,2.0,Fictional sample · weekly practice,2026-09-01,,Fictional sample
+EXC-011,STU-006,Club,Art club,Weekly,Just started,1.0,Fictional sample · exploring interests,2026-10-15,,Fictional sample
+EXC-012,STU-006,Tutoring,Maths support,Weekly,Planned,1.5,Fictional sample · starting next week,2026-10-28,,Fictional sample

@@ -1,0 +1,154 @@
+{
+  "name": "Alcovia demo - fictional payment validation",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1a6d0c3e-6c7a-4d2d-9a11-1c0d9f0a0001",
+      "name": "When clicking Test workflow",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "rows",
+              "name": "rows",
+              "value": "={{ [{'payment_id':'PAY-001','gross_amount_inr':120000,'refund_inr':0,'payment_status':'Paid'},{'payment_id':'PAY-006','gross_amount_inr':3999,'refund_inr':0,'payment_status':'Pending'},{'payment_id':'PAY-009','gross_amount_inr':0,'refund_inr':null,'payment_status':'Failed'}] }}",
+              "type": "array"
+            },
+            {
+              "id": "note",
+              "name": "note",
+              "value": "Fictional sample rows only. No Alcovia systems are connected.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2b7e1d4f-7d8b-4e3e-8b22-2d1e0a1b0002",
+      "name": "Load fictional payment rows",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "rows",
+        "options": {}
+      },
+      "id": "3c8f2e50-8e9c-4f4f-9c33-3e2f1b2c0003",
+      "name": "Split rows",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [740, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "paid",
+              "leftValue": "={{ $json.payment_status }}",
+              "rightValue": "Paid",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "refund",
+              "leftValue": "={{ $json.refund_inr }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4d903f61-9f0d-4050-0d44-4f302c3d0004",
+      "name": "Paid with known refund?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [980, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "result",
+              "name": "validation",
+              "value": "included_in_collected_revenue",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5e014072-a01e-4161-1e55-50413d4e0005",
+      "name": "Mark valid collected row",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1240, 200]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "result",
+              "name": "validation",
+              "value": "excluded_missing_or_not_paid",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6f125183-b12f-4272-2f66-61524e5f0006",
+      "name": "Mark excluded row",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1240, 400]
+    }
+  ],
+  "connections": {
+    "When clicking Test workflow": {
+      "main": [[{ "node": "Load fictional payment rows", "type": "main", "index": 0 }]]
+    },
+    "Load fictional payment rows": {
+      "main": [[{ "node": "Split rows", "type": "main", "index": 0 }]]
+    },
+    "Split rows": {
+      "main": [[{ "node": "Paid with known refund?", "type": "main", "index": 0 }]]
+    },
+    "Paid with known refund?": {
+      "main": [
+        [{ "node": "Mark valid collected row", "type": "main", "index": 0 }],
+        [{ "node": "Mark excluded row", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "tags": []
+}

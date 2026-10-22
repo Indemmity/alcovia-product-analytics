@@ -1,0 +1,14 @@
+﻿campaign_id,campaign_name,revenue_type,metric_date,spend_inr,impressions,clicks,landing_page_visits,leads,qualified_leads,frequency
+META-PROG-01,Student Roadmap,Program,2026-08-15,12500,22000,640,520,38,18,2.4
+META-PROG-01,Student Roadmap,Program,2026-09-15,14200,24500,710,590,42,21,2.7
+META-PROG-01,Student Roadmap,Program,2026-10-10,9700,18000,410,320,24,10,3.2
+META-PROG-02,Parent Webinar,Program,2026-08-15,10800,19000,580,470,31,15,2.1
+META-PROG-02,Parent Webinar,Program,2026-09-15,11500,21000,630,490,34,16,2.6
+META-PROG-02,Parent Webinar,Program,2026-10-10,9600,17000,390,300,20,8,3.1
+META-WORK-01,Career Discovery,Workshop,2026-08-15,6100,14500,430,350,22,11,2.5
+META-WORK-01,Career Discovery,Workshop,2026-09-15,6800,16000,490,400,27,13,2.8
+META-WORK-01,Career Discovery,Workshop,2026-10-10,5200,13000,330,250,18,7,3.3
+META-WORK-02,Workshop Reminder,Workshop,2026-08-15,4800,12000,300,240,17,8,2.9
+META-WORK-02,Workshop Reminder,Workshop,2026-09-15,5100,12500,315,245,18,8,3.4
+META-WORK-02,Workshop Reminder,Workshop,2026-10-10,4300,11000,260,180,14,6,3.6
+META-WORK-02,Workshop Reminder,Workshop,2026-10-18,3900,9800,210,95,9,3,3.8

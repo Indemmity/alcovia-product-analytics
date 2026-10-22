@@ -1,0 +1,21 @@
+alcovia_sample.db
+.DS_Store
+Thumbs.db
+.env
+.env.*
+
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local secrets and credentials
+*.pem
+*.key
+credentials.json
+service-account*.json
+
+# Local database files
+*.sqlite
+*.sqlite3

@@ -1,0 +1,24 @@
+﻿progress_id,student_id,recorded_at,period_grain,subject,chapter,syllabus_completion_pct,readiness_score,task_completion_pct,goal_status,hours_studied,advisor_review_status,entered_by_role
+1,STU-001,2026-10-21 17:00:00,daily,Mathematics,Linear equations,74,79,85,On track,0.8,Reviewed,Advisor sample
+2,STU-001,2026-10-21 17:00:00,weekly,Mathematics,Linear equations,72,78,84,On track,4.5,Reviewed,Advisor sample
+3,STU-001,2026-10-21 17:00:00,monthly,Mathematics,Linear equations,68,74,80,On track,16.0,Reviewed,Advisor sample
+4,STU-001,2026-10-21 17:00:00,quarterly,Mathematics,Linear equations,61,70,73,On track,38.0,Reviewed,Advisor sample
+5,STU-002,2026-10-21 17:00:00,daily,English,Reading comprehension,55,61,64,Needs review,0.4,Pending,Advisor sample
+6,STU-002,2026-10-21 17:00:00,weekly,English,Reading comprehension,54,61,63,Needs review,2.1,Pending,Advisor sample
+7,STU-002,2026-10-21 17:00:00,monthly,English,Reading comprehension,50,58,60,Needs review,8.0,Pending,Advisor sample
+8,STU-002,2026-10-21 17:00:00,quarterly,English,Reading comprehension,46,52,55,Needs review,19.0,Pending,Advisor sample
+9,STU-003,2026-10-21 17:00:00,daily,Science,Forces and motion,82,87,92,On track,1.1,Reviewed,Advisor sample
+10,STU-003,2026-10-21 17:00:00,weekly,Science,Forces and motion,81,86,91,On track,5.2,Reviewed,Advisor sample
+11,STU-003,2026-10-21 17:00:00,monthly,Science,Forces and motion,77,83,88,On track,18.5,Reviewed,Advisor sample
+12,STU-003,2026-10-21 17:00:00,quarterly,Science,Forces and motion,70,78,81,On track,41.0,Reviewed,Advisor sample
+13,STU-004,2026-10-21 17:00:00,daily,Humanities,Civic institutions,47,53,59,Needs review,0.2,Overdue,Advisor sample
+14,STU-004,2026-10-21 17:00:00,weekly,Humanities,Civic institutions,46,52,58,Needs review,1.6,Overdue,Advisor sample
+15,STU-004,2026-10-21 17:00:00,monthly,Humanities,Civic institutions,42,49,54,Needs review,6.5,Overdue,Advisor sample
+16,STU-004,2026-10-21 17:00:00,quarterly,Humanities,Civic institutions,38,45,50,Needs review,14.0,Overdue,Advisor sample
+17,STU-005,2026-10-21 17:00:00,daily,Mathematics,Fractions,68,72,78,On track,0.6,Reviewed,Advisor sample
+18,STU-005,2026-10-21 17:00:00,weekly,Mathematics,Fractions,67,71,77,On track,3.4,Reviewed,Advisor sample
+19,STU-005,2026-10-21 17:00:00,monthly,Mathematics,Fractions,62,68,72,On track,11.0,Reviewed,Advisor sample
+20,STU-005,2026-10-21 17:00:00,quarterly,Mathematics,Fractions,55,63,66,On track,24.0,Reviewed,Advisor sample
+21,STU-007,2026-10-21 17:00:00,weekly,Mathematics,Fractions,40,44,48,Monitor,1.2,Pending,Advisor sample
+22,STU-008,2026-10-21 17:00:00,weekly,English,Reading comprehension,22,28,30,Monitor,0.9,Pending,Advisor sample
+23,STU-006,2026-10-21 17:00:00,weekly,Mathematics,Fractions,,,,No baseline yet,,Missing,Advisor sample

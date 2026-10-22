@@ -1,0 +1,10 @@
+﻿payment_id,lead_id,paid_at,revenue_type,gross_amount_inr,refund_inr,payment_status,source_system,notes
+PAY-001,LEAD-002,2026-08-15 10:30:00,Program,120000,0,Paid,Fictional sample,Full programme fee
+PAY-002,LEAD-005,2026-09-12 11:15:00,Program,95000,0,Paid,Fictional sample,Full programme fee
+PAY-003,LEAD-009,2026-10-09 12:00:00,Program,120000,5000,Paid,Fictional sample,Net collected is gross minus refund
+PAY-004,LEAD-001,2026-08-20 09:00:00,Workshop,3999,0,Paid,Fictional sample,1 workshop seat at 3999
+PAY-005,LEAD-006,2026-09-20 14:00:00,Workshop,7998,0,Paid,Fictional sample,2 workshop seats at 3999
+PAY-006,LEAD-008,2026-10-15 10:00:00,Workshop,3999,0,Pending,Fictional sample,Not collected until Paid
+PAY-007,LEAD-012,2026-10-19 10:30:00,Workshop,11997,0,Paid,Fictional sample,3 workshop seats at 3999
+PAY-008,LEAD-011,2026-10-17 16:00:00,Trial,15000,0,Paid,Fictional sample,Trial fee; not a full programme
+PAY-009,LEAD-004,2026-08-18 12:00:00,Program,0,,Failed,Fictional sample,Missing refund treated as unknown not zero in SQL

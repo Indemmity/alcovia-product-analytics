@@ -1,0 +1,7 @@
+habit_id,student_id,recorded_date,focus_minutes_daily,study_streak_days,longest_session_minutes,break_ratio_pct,environment_quality,notes
+HAB-001,STU-001,2026-10-21,285,12,65,35,Quiet home study space,Fictional sample · excellent focus habits
+HAB-002,STU-002,2026-10-21,180,5,45,40,Library with distractions,Fictional sample · needs improvement
+HAB-003,STU-003,2026-10-21,330,18,85,30,Dedicated study room,Fictional sample · excellent consistency
+HAB-004,STU-004,2026-10-21,120,2,40,50,Shared family space,Fictional sample · inconsistent
+HAB-005,STU-005,2026-10-21,240,8,55,38,Classroom + home,Fictional sample · moderate consistency
+HAB-006,STU-006,2026-10-21,90,1,30,45,School study centre,Fictional sample · new student · establishing routine

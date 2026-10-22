@@ -1,0 +1,145 @@
+{
+  "name": "Alcovia demo - fictional trial renewal queue",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "7a236294-c230-4383-3077-72635f600007",
+      "name": "When clicking Test workflow",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "asof",
+              "name": "as_of_date",
+              "value": "2026-10-22",
+              "type": "string"
+            },
+            {
+              "id": "enrollments",
+              "name": "enrollments",
+              "value": "={{ [{'enrollment_id':'ENR-004','student_id':'STU-006','program_type':'Trial','renewal_date':'2026-10-31','status':'Trial active'},{'enrollment_id':'ENR-005','student_id':'STU-007','program_type':'Trial','renewal_date':'2026-11-03','status':'Trial active'},{'enrollment_id':'ENR-001','student_id':'STU-001','program_type':'Full programme','renewal_date':null,'status':'Active'}] }}",
+              "type": "array"
+            },
+            {
+              "id": "note",
+              "name": "note",
+              "value": "Fictional enrollments. This workflow does not send email or write to a CRM.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8b3473a5-d341-4494-4188-837460710008",
+      "name": "Load fictional enrollments",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "enrollments",
+        "options": {}
+      },
+      "id": "9c4584b6-e452-45a5-5299-948571820009",
+      "name": "Split enrollments",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [740, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "trial",
+              "leftValue": "={{ $json.program_type }}",
+              "rightValue": "Trial",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "0d5695c7-f563-46b6-63aa-a59682930010",
+      "name": "Is trial enrollment?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [980, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "queue",
+              "name": "queue_action",
+              "value": "create_draft_reminder_for_owner",
+              "type": "string"
+            },
+            {
+              "id": "send",
+              "name": "auto_send",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1e6706d8-0674-47c7-74bb-b6a793a40011",
+      "name": "Queue draft reminder",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1240, 200]
+    },
+    {
+      "parameters": {},
+      "id": "2f7817e9-1785-48d8-85cc-c7b8a4b50012",
+      "name": "Skip non-trial",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1240, 400]
+    }
+  ],
+  "connections": {
+    "When clicking Test workflow": {
+      "main": [[{ "node": "Load fictional enrollments", "type": "main", "index": 0 }]]
+    },
+    "Load fictional enrollments": {
+      "main": [[{ "node": "Split enrollments", "type": "main", "index": 0 }]]
+    },
+    "Split enrollments": {
+      "main": [[{ "node": "Is trial enrollment?", "type": "main", "index": 0 }]]
+    },
+    "Is trial enrollment?": {
+      "main": [
+        [{ "node": "Queue draft reminder", "type": "main", "index": 0 }],
+        [{ "node": "Skip non-trial", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "tags": []
+}

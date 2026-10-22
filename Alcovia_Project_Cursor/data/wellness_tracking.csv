@@ -1,0 +1,10 @@
+wellness_id,student_id,recorded_date,active_minutes,sleep_hours,stress_level,mood_rating,wellness_notes,data_source,consent_status
+WEL-001,STU-001,2026-10-21,45,8.0,Low,Happy,Fictional sample · good sleep and activity,Wearable sample,Fictional / not applicable
+WEL-002,STU-001,2026-10-20,52,7.5,Low,Happy,Fictional sample · consistent exercise,Wearable sample,Fictional / not applicable
+WEL-003,STU-002,2026-10-21,20,6.5,High,Stressed,Fictional sample · needs more sleep,Self-report,Fictional / not applicable
+WEL-004,STU-002,2026-10-20,15,6.0,High,Anxious,Fictional sample · poor sleep impact,Self-report,Fictional / not applicable
+WEL-005,STU-003,2026-10-21,60,8.5,Low,Happy,Fictional sample · high activity · excellent wellness,Wearable sample,Fictional / not applicable
+WEL-006,STU-003,2026-10-20,55,8.0,Low,Happy,Fictional sample · consistent,Wearable sample,Fictional / not applicable
+WEL-007,STU-004,2026-10-21,25,7.0,Medium,Neutral,Fictional sample · moderate wellness,Self-report,Fictional / not applicable
+WEL-008,STU-005,2026-10-21,40,7.5,Medium,Content,Fictional sample · balanced lifestyle,Self-report,Fictional / not applicable
+WEL-009,STU-006,2026-10-21,,7.5,Unknown,Undetermined,Fictional sample · new student · baseline establishing,Self-report,Fictional / not applicable

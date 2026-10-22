@@ -1,0 +1,6 @@
+feedback_id,session_id,student_id,rating,feedback_text,submitted_at
+1,SES-001,STU-001,4.5,Fictional comment: session was clear,2026-10-16 11:00:00
+2,SES-001,STU-005,4.0,Fictional comment: wanted more practice time,2026-10-16 11:10:00
+3,SES-002,STU-003,4.8,Fictional comment: useful examples,2026-10-16 12:00:00
+4,SES-006,STU-001,4.2,Fictional comment: workshop pace was fine,2026-10-18 17:00:00
+5,SES-008,STU-002,,Fictional comment: rating not captured,2026-10-19 17:00:00

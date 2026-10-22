@@ -1,0 +1,19 @@
+milestone_id,student_id,milestone_type,milestone_description,target_date,status,completion_date,owner,notes
+MIL-001,STU-001,Academic Goal,Complete Linear Equations chapter,2026-10-31,Completed,2026-10-21,STU-001,Fictional sample · student completed early
+MIL-002,STU-001,Career Milestone,Research two university programmes,2026-11-15,In Progress,,STU-001,Fictional sample · on track
+MIL-003,STU-001,Personal Goal,Establish study routine (5 hrs/week minimum),2026-10-20,Completed,2026-10-18,STU-001,Fictional sample
+MIL-004,STU-002,Academic Goal,Complete Reading Comprehension chapter,2026-11-10,In Progress,,STU-002,Fictional sample
+MIL-005,STU-002,Career Milestone,Attend engineering open day,2026-11-05,Overdue,,STU-002,Fictional sample · overdue milestone flag
+MIL-006,STU-002,Personal Goal,Improve sleep routine (8 hrs/night target),2026-10-28,In Progress,,STU-002,Fictional sample
+MIL-007,STU-003,Academic Goal,Complete Science module,2026-10-25,Completed,2026-10-21,STU-003,Fictional sample · early completion
+MIL-008,STU-003,Career Milestone,Shadow industry professional (1 day),2026-11-20,Not Started,,STU-003,Fictional sample
+MIL-009,STU-003,Personal Goal,Volunteer activity (10 hours),2026-12-01,In Progress,,STU-003,Fictional sample
+MIL-010,STU-004,Academic Goal,Complete Humanities chapter,2026-11-05,Not Started,,STU-004,Fictional sample · late starter
+MIL-011,STU-004,Career Milestone,Prepare CV and cover letter,2026-11-30,In Progress,,STU-004,Fictional sample
+MIL-012,STU-004,Personal Goal,Develop time management skills,2026-10-31,In Progress,,STU-004,Fictional sample
+MIL-013,STU-005,Academic Goal,Complete Fractions chapter,2026-10-28,In Progress,,STU-005,Fictional sample
+MIL-014,STU-005,Career Milestone,Research apprenticeship opportunities,2026-11-30,In Progress,,STU-005,Fictional sample
+MIL-015,STU-005,Personal Goal,Regular exercise routine (3x/week),2026-11-15,In Progress,,STU-005,Fictional sample
+MIL-016,STU-006,Academic Goal,Enrollment orientation checklist,2026-10-25,Completed,2026-10-20,STU-006,Fictional sample · new student
+MIL-017,STU-006,Career Milestone,Career guidance session booked,2026-11-01,Not Started,,STU-006,Fictional sample
+MIL-018,STU-006,Personal Goal,Family discussion about study plans,2026-10-30,In Progress,,STU-006,Fictional sample

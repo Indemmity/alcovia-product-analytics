@@ -1,0 +1,9 @@
+enrollment_id,lead_id,student_id,program_type,enrollment_date,renewal_date,status,seats
+ENR-001,LEAD-002,STU-001,Full programme,2026-08-15,,Active,1
+ENR-002,LEAD-005,STU-003,Full programme,2026-09-12,,Active,1
+ENR-003,LEAD-009,STU-005,Full programme,2026-10-09,,Active,1
+ENR-004,LEAD-011,STU-006,Trial,2026-10-17,2026-10-31,Trial active,1
+ENR-005,LEAD-008,STU-007,Trial,2026-10-14,2026-11-03,Trial active,1
+ENR-006,LEAD-001,STU-002,Workshop,2026-08-20,,Completed,1
+ENR-007,LEAD-006,STU-004,Workshop,2026-09-20,,Completed,2
+ENR-008,LEAD-012,STU-008,Workshop,2026-10-19,,Active,3
