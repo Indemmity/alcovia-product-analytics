@@ -7,7 +7,10 @@
       "name": "When clicking Test workflow",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
-      "position": [240, 300]
+      "position": [
+        240,
+        300
+      ]
     },
     {
       "parameters": {
@@ -22,13 +25,13 @@
             {
               "id": "enrollments",
               "name": "enrollments",
-              "value": "={{ [{'enrollment_id':'ENR-004','student_id':'STU-006','program_type':'Trial','renewal_date':'2026-10-31','status':'Trial active'},{'enrollment_id':'ENR-005','student_id':'STU-007','program_type':'Trial','renewal_date':'2026-11-03','status':'Trial active'},{'enrollment_id':'ENR-001','student_id':'STU-001','program_type':'Full programme','renewal_date':null,'status':'Active'}] }}",
+              "value": "={{ [{'enrollment_id':'ENR-004','student_id':'STU-006','program_type':'Trial','renewal_date':'2026-10-31','as_of_date':'2026-10-22','status':'Trial active'},{'enrollment_id':'ENR-005','student_id':'STU-007','program_type':'Trial','renewal_date':'2026-11-03','as_of_date':'2026-10-22','status':'Trial active'},{'enrollment_id':'ENR-001','student_id':'STU-001','program_type':'Full programme','renewal_date':null,'as_of_date':'2026-10-22','status':'Active'}] }}",
               "type": "array"
             },
             {
               "id": "note",
               "name": "note",
-              "value": "Fictional enrollments. This workflow does not send email or write to a CRM.",
+              "value": "Fictional enrollments. Uses fixed as_of_date on each row. Draft candidate only; no email or CRM write.",
               "type": "string"
             }
           ]
@@ -39,7 +42,10 @@
       "name": "Load fictional enrollments",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [500, 300]
+      "position": [
+        500,
+        300
+      ]
     },
     {
       "parameters": {
@@ -50,7 +56,10 @@
       "name": "Split enrollments",
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
-      "position": [740, 300]
+      "position": [
+        740,
+        300
+      ]
     },
     {
       "parameters": {
@@ -69,6 +78,33 @@
                 "type": "string",
                 "operation": "equals"
               }
+            },
+            {
+              "id": "active",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "Trial active",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "not_expired",
+              "leftValue": "={{ Math.floor((new Date($json.renewal_date + 'T00:00:00Z') - new Date($json.as_of_date + 'T00:00:00Z')) / 86400000) }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            },
+            {
+              "id": "within_21_days",
+              "leftValue": "={{ Math.floor((new Date($json.renewal_date + 'T00:00:00Z') - new Date($json.as_of_date + 'T00:00:00Z')) / 86400000) }}",
+              "rightValue": 21,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
             }
           ],
           "combinator": "and"
@@ -76,10 +112,13 @@
         "options": {}
       },
       "id": "0d5695c7-f563-46b6-63aa-a59682930010",
-      "name": "Is trial enrollment?",
+      "name": "Active trial due within 21 days?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
-      "position": [980, 300]
+      "position": [
+        980,
+        300
+      ]
     },
     {
       "parameters": {
@@ -88,7 +127,7 @@
             {
               "id": "queue",
               "name": "queue_action",
-              "value": "create_draft_reminder_for_owner",
+              "value": "draft_reminder_candidate_for_human_review",
               "type": "string"
             },
             {
@@ -96,6 +135,30 @@
               "name": "auto_send",
               "value": false,
               "type": "boolean"
+            },
+            {
+              "id": "days",
+              "name": "days_until_renewal",
+              "value": "={{ Math.floor((new Date($json.renewal_date + 'T00:00:00Z') - new Date($json.as_of_date + 'T00:00:00Z')) / 86400000) }}",
+              "type": "number"
+            },
+            {
+              "id": "date",
+              "name": "renewal_date",
+              "value": "={{ $json.renewal_date }}",
+              "type": "string"
+            },
+            {
+              "id": "enrollment",
+              "name": "enrollment_id",
+              "value": "={{ $json.enrollment_id }}",
+              "type": "string"
+            },
+            {
+              "id": "student",
+              "name": "student_id",
+              "value": "={{ $json.student_id }}",
+              "type": "string"
             }
           ]
         },
@@ -105,7 +168,10 @@
       "name": "Queue draft reminder",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [1240, 200]
+      "position": [
+        1240,
+        200
+      ]
     },
     {
       "parameters": {},
@@ -113,23 +179,62 @@
       "name": "Skip non-trial",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
-      "position": [1240, 400]
+      "position": [
+        1240,
+        400
+      ]
     }
   ],
   "connections": {
     "When clicking Test workflow": {
-      "main": [[{ "node": "Load fictional enrollments", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Load fictional enrollments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Load fictional enrollments": {
-      "main": [[{ "node": "Split enrollments", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Split enrollments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Split enrollments": {
-      "main": [[{ "node": "Is trial enrollment?", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Is trial enrollment?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Is trial enrollment?": {
       "main": [
-        [{ "node": "Queue draft reminder", "type": "main", "index": 0 }],
-        [{ "node": "Skip non-trial", "type": "main", "index": 0 }]
+        [
+          {
+            "node": "Queue draft reminder",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip non-trial",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
