@@ -246,6 +246,3 @@ Before production use, the priority is to reconcile data and metric inconsistenc
 
 ---
 
-**Prepared by:** Alcovia Product, Systems & Analytics Lead (assessment prototype)  
-**Date:** 2026-10-22  
-**Status:** Assignment coverage documented; one sample milestone date/status inconsistency remains to be corrected in the source data before final sign-off.
