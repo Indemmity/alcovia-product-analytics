@@ -1,6 +1,11 @@
-# Assignment Coverage & Implementation Status
+# Assignment Coverage & Validation Notes
 
-**Status as of:** 2026-10-22 (prototype as-of date)
+**Prototype as-of date:** 2026-10-22  
+**Purpose:** Record assignment coverage, the checks performed against fictional sample data, and the gaps that remain before production use.
+
+> **Scope and validation:** This is a prototype built with fictional records. Dashboard interactions and the sample-data validator have been checked against the documented scenarios; this does not establish production readiness or prove every workflow end to end. The documented automation workflows are not live, and there is no production database, authentication, or live Alcovia integration.
+
+> **Items to reconcile:** The sample milestone `MIL-005` is marked `Overdue` despite having a target date of 2026-11-05, which is after the prototype as-of date. Correct the source record or status before treating that alert as valid. The CTR and cost-per-qualified-lead figures below are based on campaign-level data and their formulas are stated explicitly.
 
 ## Original Assignment Requirements
 
@@ -42,7 +47,7 @@
 | **Career milestones** | ✅ **Implemented** | e.g., "Research apprenticeships", "Attend engineering open day", "Prepare CV" (6 total). |
 | **Personal milestones** | ✅ **Implemented** | e.g., "Establish study routine", "Improve sleep", "Regular exercise" (6 total). |
 | **Dashboard display** | ✅ **Implemented** | "Personal development" tab shows milestones table with target date, status, completion date. |
-| **Overdue flag** | ✅ **Implemented** | STU-002 "Attend engineering open day" marked "Overdue". Shows red alert on Home screen. |
+| **Overdue flag** | ⚠️ **Needs data reconciliation** | `MIL-005` (STU-002, “Attend engineering open day”) is marked `Overdue`, but its target date is 2026-11-05, after the 2026-10-22 prototype as-of date. Correct the sample date or status, then verify the Home-screen alert. |
 | **Clearly fictional** | ✅ **Implemented** | All rows have "Fictional sample" label in notes. |
 
 #### B.2 Focus Time & Study Habits
@@ -138,8 +143,8 @@
 | **GTM dashboard still works** | ✅ **Verified** | Opens, filters work (period, lead source, revenue type). |
 | **Revenue metrics intact** | ✅ **Verified** | Collected revenue ₹368,994 (Program ₹330k, Workshop ₹24k, Trial ₹15k). |
 | **Target variance intact** | ✅ **Verified** | Revenue & follow-ups tab shows target bars and variance. |
-| **CTR calculated correctly** | ✅ **Verified** | 2.7% (9 qualified / 330 impressions). |
-| **Cost per QL correct** | ✅ **Verified** | ₹726 (₹104,500 / 143 qualified leads). |
+| **CTR formula** | ⚠️ **Formula definition verified; reported example corrected** | CTR is clicks ÷ impressions. Across the campaign sample: 5,695 clicks ÷ 210,300 impressions = 2.71%. The earlier description using “9 qualified / 330 impressions” was incorrect and has been removed. |
+| **Cost per qualified lead** | ✅ **Recalculated from campaign data** | ₹104,500 spend ÷ 144 campaign-reported qualified leads = ₹725.69 (about ₹726). Use campaign-level `qualified_leads`, not CRM `is_qualified` counts. |
 | **Funnel conversion intact** | ✅ **Verified** | Lead funnel tab calculates distinct lead counts per stage. |
 | **Journey time intact** | ✅ **Verified** | Avg journey time shows in KPI card. |
 | **Filters work** | ✅ **Verified** | Period, cohort, lead source, revenue type all filter correctly. |
@@ -161,7 +166,7 @@
 | **Validator exits 0** | ✅ **Verified** | `python scripts/validate_sample_data.py` passes all checks. |
 | **Record counts correct** | ✅ **Verified** | 40 chapter_readiness, 18 personal_dev, 6 study_habits, 9 wellness, 12 extracurricular, 12 advisor_inputs. |
 | **Referential integrity** | ✅ **Verified** | All student_id, lead_id, chapter_id references valid. No orphan records. |
-| **Revenue reconciliation** | ✅ **Verified** | ₹368,994 net collected. INV-SAMPLE-001 vs PAY-001 mismatch documented. |
+| **Revenue reconciliation** | ⚠️ **Exception documented** | ₹368,994 net collected in the sample. The `INV-SAMPLE-001` vs `PAY-001` mismatch is intentional and documented; invoice and payment records are not force-matched. |
 
 #### D.4 Documentation updated
 
@@ -180,13 +185,13 @@
 | Area | Requirement | Status |
 |------|-------------|--------|
 | **A. Chapter readiness** | 5-stage breakdown, missing = unavailable, test all scenarios | ✅ **Complete** |
-| **B.1 Personal development** | Milestones (academic/career/personal), sample data, dashboard | ✅ **Complete** |
+| **B.1 Personal development** | Milestones (academic/career/personal), sample data, dashboard | ⚠️ **Implemented; one sample status needs reconciliation** |
 | **B.2 Study habits** | Focus time, streaks, session length, environment, sample data | ✅ **Complete** |
 | **B.3 Wellness** | Active minutes, sleep, stress, mood, consent-aware, fictional labeled | ✅ **Complete** |
 | **B.4 Extracurriculars** | Tutoring, sports, clubs, volunteer, frequency, hours, advisor notes | ✅ **Complete** |
 | **B.5 Advisor review** | Missing input flags, overdue tracking, dashboard indicators | ✅ **Complete** |
 | **C. Automation workflows** | 8 workflows documented, dashboard indicators live, not email-live | ✅ **Complete (documented)** |
-| **D. GTM preservation** | Revenue, CTR, CPA, funnel, filters, empty states all work | ✅ **Verified** |
+| **D. GTM preservation** | Revenue, CTR, cost per qualified lead, funnel, filters, empty states | ✅ **Verified against sample data; KPI descriptions corrected** |
 | **D. Student dashboard preservation** | Continue card, search, periods, empty states, all tabs present | ✅ **Verified** |
 | **D. Validator** | Exits 0, all checks pass, 6 new CSVs included | ✅ **Verified** |
 | **D. Documentation** | README, METRIC_DEFINITIONS, ASSIGNMENT_COVERAGE, AUTOMATION_WORKFLOWS | ✅ **Updated** |
@@ -214,18 +219,18 @@
 
 ---
 
-## Next Steps for Production
+## Prioritised Next Steps
 
-1. **Move sample CSVs to live database:** Replace fetch() calls with API endpoints.
-2. **Implement n8n workflows:** Use production credentials for email/task creation.
-3. **Add authentication:** OAuth2 for role-based access (student, advisor, GTM, admin).
-4. **Privacy review:** Wellness data requires explicit consent. Audit all student-facing communications.
-5. **Load testing:** Test with 1000+ students to ensure performance.
-6. **Browser testing:** Verify responsive design and accessibility (WCAG 2.1 AA).
-7. **Data reconciliation:** Align Alcovia's actual schema with the proposed model.
+1. **Reconcile sample-data exceptions:** Correct the `MIL-005` target-date/status mismatch and recheck the Home-screen overdue alert. Keep the documented invoice/payment mismatch explicitly labelled as an intentional test case.
+2. **Validate KPI definitions and outputs:** Re-run CTR and cost-per-qualified-lead calculations from the campaign source data; preserve the formulas in `docs/METRIC_DEFINITIONS.md`.
+3. **Validate key user journeys:** Test chapter readiness, missing-data states, advisor alerts, filters, and student resume logic across the documented scenarios.
+4. **Review privacy and access controls:** Require explicit consent for any real wellness data and define role-based access for students, advisors, GTM, and admins.
+5. **Move from sample files to a live data layer:** Replace static CSV fetches with documented API/database contracts and reconcile Alcovia's actual schema.
+6. **Implement and test automation:** Add production credentials and error handling for email/task workflows; test retries, duplicate notifications, and audit logs.
+7. **Test for production use:** Check responsive behaviour, accessibility (WCAG 2.1 AA), and performance at the expected student volume before rollout.
 
 ---
 
 **Prepared by:** Alcovia Product, Systems & Analytics Lead (assessment prototype)  
 **Date:** 2026-10-22  
-**Status:** Submission-ready
+**Status:** Assignment coverage documented; one sample milestone date/status inconsistency remains to be corrected in the source data before final sign-off.
