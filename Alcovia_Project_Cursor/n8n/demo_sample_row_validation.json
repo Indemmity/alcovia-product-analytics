@@ -1,5 +1,5 @@
 {
-  "name": "Alcovia demo - fictional payment validation",
+  "name": "Alcovia demo - fictional collected-payment eligibility checks",
   "nodes": [
     {
       "parameters": {},
@@ -7,7 +7,10 @@
       "name": "When clicking Test workflow",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
-      "position": [240, 300]
+      "position": [
+        240,
+        300
+      ]
     },
     {
       "parameters": {
@@ -22,7 +25,7 @@
             {
               "id": "note",
               "name": "note",
-              "value": "Fictional sample rows only. No Alcovia systems are connected.",
+              "value": "Fictional sample rows only. Eligibility demo, not full payment reconciliation. Missing refund values remain unknown. No Alcovia systems are connected.",
               "type": "string"
             }
           ]
@@ -33,7 +36,10 @@
       "name": "Load fictional payment rows",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [500, 300]
+      "position": [
+        500,
+        300
+      ]
     },
     {
       "parameters": {
@@ -44,7 +50,10 @@
       "name": "Split rows",
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
-      "position": [740, 300]
+      "position": [
+        740,
+        300
+      ]
     },
     {
       "parameters": {
@@ -72,6 +81,23 @@
                 "type": "number",
                 "operation": "gte"
               }
+            },
+            {
+              "id": "payment_id",
+              "leftValue": "={{ $json.payment_id }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "amount",
+              "leftValue": "={{ $json.gross_amount_inr }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
             }
           ],
           "combinator": "and"
@@ -79,10 +105,13 @@
         "options": {}
       },
       "id": "4d903f61-9f0d-4050-0d44-4f302c3d0004",
-      "name": "Paid with known refund?",
+      "name": "Eligible for collected-revenue reporting?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
-      "position": [980, 300]
+      "position": [
+        980,
+        300
+      ]
     },
     {
       "parameters": {
@@ -91,7 +120,7 @@
             {
               "id": "result",
               "name": "validation",
-              "value": "included_in_collected_revenue",
+              "value": "eligible_for_collected_revenue_reporting",
               "type": "string"
             }
           ]
@@ -102,7 +131,10 @@
       "name": "Mark valid collected row",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [1240, 200]
+      "position": [
+        1240,
+        200
+      ]
     },
     {
       "parameters": {
@@ -111,7 +143,7 @@
             {
               "id": "result",
               "name": "validation",
-              "value": "excluded_missing_or_not_paid",
+              "value": "excluded_check_status_refund_id_or_amount",
               "type": "string"
             }
           ]
@@ -122,23 +154,62 @@
       "name": "Mark excluded row",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [1240, 400]
+      "position": [
+        1240,
+        400
+      ]
     }
   ],
   "connections": {
     "When clicking Test workflow": {
-      "main": [[{ "node": "Load fictional payment rows", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Load fictional payment rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Load fictional payment rows": {
-      "main": [[{ "node": "Split rows", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Split rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Split rows": {
-      "main": [[{ "node": "Paid with known refund?", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Paid with known refund?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Paid with known refund?": {
       "main": [
-        [{ "node": "Mark valid collected row", "type": "main", "index": 0 }],
-        [{ "node": "Mark excluded row", "type": "main", "index": 0 }]
+        [
+          {
+            "node": "Mark valid collected row",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark excluded row",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
