@@ -21,7 +21,7 @@ These priorities map to the problems and requested outcomes in the assessment br
 - [Executive Summary & Strategy](Alcovia_Project_Cursor/docs/EXECUTIVE_SUMMARY_STRATEGY.md)
 - [Product Requirements Document — Continue Studying](Alcovia_Project_Cursor/docs/PRD_student_continue_studying.md)
 - [SQL schema](Alcovia_Project_Cursor/sql/schema.sql) · [KPI queries](Alcovia_Project_Cursor/sql/metrics.sql)
-- [n8n workflow exports](Alcovia_Project_Cursor/n8n/) · [manual execution evidence](Alcovia_Project_Cursor/n8n/EXECUTION_EVIDENCE.md)
+- [n8n workflow exports](Alcovia_Project_Cursor/n8n/) · [manual execution evidence](Alcovia_Project_Cursor/n8n/EXECUTION_EVIDENCE.md) · [six execution screenshots](Alcovia_Project_Cursor/n8n/evidence/README.md)
 - [Assignment coverage and validation notes](Alcovia_Project_Cursor/ASSIGNMENT_COVERAGE.md)
 
 If a published dashboard does not load, use the local run instructions below.
