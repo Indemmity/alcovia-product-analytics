@@ -3,13 +3,13 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "1a6d0c3e-6c7a-4d2d-9a11-1c0d9f0a0001",
+      "id": "9418678d-308a-49fd-87ad-2e23ab22cccd",
       "name": "When clicking Test workflow",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        240,
-        300
+        0,
+        112
       ]
     },
     {
@@ -32,13 +32,13 @@
         },
         "options": {}
       },
-      "id": "2b7e1d4f-7d8b-4e3e-8b22-2d1e0a1b0002",
+      "id": "5a98ab27-74c0-4608-a28f-e6db80ffc425",
       "name": "Load fictional payment rows",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        500,
-        300
+        272,
+        112
       ]
     },
     {
@@ -46,13 +46,13 @@
         "fieldToSplitOut": "rows",
         "options": {}
       },
-      "id": "3c8f2e50-8e9c-4f4f-9c33-3e2f1b2c0003",
+      "id": "212eb1e8-54c7-47b8-94be-0af529d450c0",
       "name": "Split rows",
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        740,
-        300
+        512,
+        112
       ]
     },
     {
@@ -61,7 +61,8 @@
           "options": {
             "caseSensitive": true,
             "leftValue": "",
-            "typeValidation": "loose"
+            "typeValidation": "loose",
+            "version": 1
           },
           "conditions": [
             {
@@ -104,13 +105,13 @@
         },
         "options": {}
       },
-      "id": "4d903f61-9f0d-4050-0d44-4f302c3d0004",
+      "id": "3daac3a6-b466-4f18-b1a7-58bacc59bd92",
       "name": "Eligible for collected-revenue reporting?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        980,
-        300
+        752,
+        112
       ]
     },
     {
@@ -127,13 +128,13 @@
         },
         "options": {}
       },
-      "id": "5e014072-a01e-4161-1e55-50413d4e0005",
+      "id": "6b83157a-6baa-40c7-8f84-125efbc82105",
       "name": "Mark valid collected row",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1240,
-        200
+        1008,
+        0
       ]
     },
     {
@@ -150,16 +151,17 @@
         },
         "options": {}
       },
-      "id": "6f125183-b12f-4272-2f66-61524e5f0006",
+      "id": "066b6625-16a0-40d3-83f9-f39e0061ca07",
       "name": "Mark excluded row",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1240,
-        400
+        1008,
+        208
       ]
     }
   ],
+  "pinData": {},
   "connections": {
     "When clicking Test workflow": {
       "main": [
@@ -183,18 +185,7 @@
         ]
       ]
     },
-    "Split rows": {
-      "main": [
-        [
-          {
-            "node": "Paid with known refund?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Paid with known refund?": {
+    "Eligible for collected-revenue reporting?": {
       "main": [
         [
           {
@@ -211,15 +202,29 @@
           }
         ]
       ]
+    },
+    "Split rows": {
+      "main": [
+        [
+          {
+            "node": "Eligible for collected-revenue reporting?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
+  "active": false,
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "binaryMode": "separate"
   },
-  "staticData": null,
+  "versionId": "4ba20072-5d3b-4811-88e6-685894616cb1",
   "meta": {
-    "templateCredsSetupCompleted": true
+    "instanceId": "ba9a6ea4ba851dcbe700d29a5ec2b63209c48909a7041970056e78e62741a56b"
   },
-  "pinData": {},
+  "nodeGroups": [],
+  "id": "lcrVxrlonxX8vbEh",
   "tags": []
 }
