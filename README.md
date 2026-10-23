@@ -4,6 +4,15 @@ This repository demonstrates my approach to improving student engagement and pro
 
 > **Scope note:** I did not have access to Alcovia's live systems or business data. All records and dashboard figures are fictional and demonstrate proposed logic only.
 
+## Key priorities
+
+- **Improve student continuation:** Identify where students disengage and make it easier for them to resume studying.
+- **Improve growth visibility:** Track lead progression, campaign performance, revenue targets, invoices, and upcoming trial renewals in one place.
+- **Strengthen operational follow-up:** Surface missing advisor inputs, overdue milestones, and data-quality issues before they become larger problems.
+- **Build toward reliable decision-making:** Establish clear KPI definitions, validate source data, and introduce appropriate access controls before moving from prototype to production.
+
+These are proposed priorities based on the assessment scope and fictional sample data, not conclusions verified against Alcovia's live business performance.
+
 ## Quick links
 
 - **[Open dashboard homepage](https://indemmity.github.io/alcovia-product-analytics/Alcovia_Project_Cursor/dashboards/index.html)**
@@ -24,6 +33,14 @@ If a published dashboard does not load, use the local run instructions below.
 3. Review [metric definitions](Alcovia_Project_Cursor/docs/METRIC_DEFINITIONS.md), the [SQL schema](Alcovia_Project_Cursor/sql/schema.sql), and [KPI queries](Alcovia_Project_Cursor/sql/metrics.sql).
 4. Inspect the [n8n workflow exports](Alcovia_Project_Cursor/n8n/) and [execution evidence](Alcovia_Project_Cursor/n8n/EXECUTION_EVIDENCE.md).
 5. Use the [assignment coverage notes](Alcovia_Project_Cursor/ASSIGNMENT_COVERAGE.md) to review what was checked and what remains out of scope.
+
+## How to review the prototype
+
+1. Open the [dashboard homepage](https://indemmity.github.io/alcovia-product-analytics/Alcovia_Project_Cursor/dashboards/index.html) and explore both dashboards.
+2. Review how the GTM view brings funnel, campaign, revenue, invoice, and renewal information together.
+3. Explore the student view's time filters, progress/readiness indicators, and continuation flow.
+4. Read the strategy and PRD to understand the proposed priorities, delivery plan, and success measures.
+5. Check the metric definitions, SQL references, and n8n demo evidence to see how the proposed reporting and follow-up logic is documented.
 
 ## What the prototype covers
 
@@ -73,27 +90,11 @@ All project files are organised under [`Alcovia_Project_Cursor/`](Alcovia_Projec
 - [All n8n materials](Alcovia_Project_Cursor/n8n/)
 
 ### Fictional sample datasets
+
+The CSV files support the dashboards and sample validation checks. They cover academic catalogue data, student records and progress, study activity and habits, chapter readiness, advisor inputs, milestones, programme sessions and feedback, extracurricular activities, optional wellness fields, leads, campaign performance, enrolments, payments, invoices, and revenue targets.
+
 - [Dataset guide](Alcovia_Project_Cursor/data/README.md)
-- [Academic catalogue](Alcovia_Project_Cursor/data/academic_catalog.csv)
-- [Advisor inputs](Alcovia_Project_Cursor/data/advisor_inputs.csv)
-- [Campaign performance by day](Alcovia_Project_Cursor/data/campaigns_daily.csv)
-- [Five-stage chapter readiness](Alcovia_Project_Cursor/data/chapter_readiness_stages.csv)
-- [Enrolments and renewals](Alcovia_Project_Cursor/data/enrollments.csv)
-- [Extracurricular activities](Alcovia_Project_Cursor/data/extracurricular_activities.csv)
-- [Invoices](Alcovia_Project_Cursor/data/invoices.csv)
-- [Lead stage events](Alcovia_Project_Cursor/data/lead_stage_events.csv)
-- [Leads and funnel stages](Alcovia_Project_Cursor/data/leads.csv)
-- [Payment records](Alcovia_Project_Cursor/data/payments.csv)
-- [Personal development milestones](Alcovia_Project_Cursor/data/personal_development.csv)
-- [Programme sessions](Alcovia_Project_Cursor/data/program_sessions.csv)
-- [Session feedback](Alcovia_Project_Cursor/data/session_feedback.csv)
-- [Student activity and study checkpoints](Alcovia_Project_Cursor/data/student_activity.csv)
-- [Student progress snapshots](Alcovia_Project_Cursor/data/student_progress.csv)
-- [Fictional student records](Alcovia_Project_Cursor/data/students.csv)
-- [Study habits](Alcovia_Project_Cursor/data/study_habits.csv)
-- [Revenue targets](Alcovia_Project_Cursor/data/targets.csv)
-- [Wellness tracking (fictional/optional)](Alcovia_Project_Cursor/data/wellness_tracking.csv)
-- [All sample data files](Alcovia_Project_Cursor/data/)
+- [Browse all sample data files](Alcovia_Project_Cursor/data/)
 
 ### Repository setup
 - [Project .gitignore](Alcovia_Project_Cursor/.gitignore)
