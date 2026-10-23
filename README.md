@@ -49,6 +49,7 @@ The dashboards use browser `fetch()` to read the CSV files, so serve the folder 
 All project materials are inside [`Alcovia_Project_Cursor/`](Alcovia_Project_Cursor/).
 
 - [Executive write-up and 8-week plan](Alcovia_Project_Cursor/docs/executive_writeup.md) — priorities, assumptions, and proposed delivery sequence.
+- [Executive Summary & Strategy](Alcovia_Project_Cursor/docs/EXECUTIVE_SUMMARY_STRATEGY.md) — concise problem-solving approach, resource allocation, and eight-week timeboxing plan.
 - [PRD — Student Continue Studying](Alcovia_Project_Cursor/docs/PRD_student_continue_studying.md) — problem hypothesis, requirements, edge cases, acceptance criteria, and success metrics.
 - [Assignment coverage and validation notes](Alcovia_Project_Cursor/ASSIGNMENT_COVERAGE.md) — requirement-by-requirement summary and sample checks.
 - [Final verification report](Alcovia_Project_Cursor/FINAL_REPORT.md) — what was checked and what remains outside the prototype.
