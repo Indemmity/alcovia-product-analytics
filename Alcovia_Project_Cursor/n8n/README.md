@@ -45,7 +45,7 @@ Trigger: after an approved input window.
 - Student data requires consent and access control; this repo contains only fictional IDs.
 
 
-For observed manual execution results, see [EXECUTION_EVIDENCE.md](./EXECUTION_EVIDENCE.md).
+For observed manual execution results, see [EXECUTION_EVIDENCE.md](./EXECUTION_EVIDENCE.md) and the [six execution screenshots](./evidence/README.md).
 
 ## Manual execution test record
 
