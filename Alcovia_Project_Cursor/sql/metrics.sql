@@ -1,5 +1,6 @@
 -- Example KPI queries (PostgreSQL) aligned to sql/schema.sql and data/*.csv.
--- Fictional sample data only. Confirm definitions with Alcovia before production.
+-- KPI categories map to the written assessment brief; results shown from these CSVs use synthetic demonstration records.
+-- Confirm metric definitions, source ownership and joins with Alcovia before production.
 -- Missing numerators/denominators return NULL, not 0, unless the count is a genuine empty set.
 
 -- 1) Collected revenue by month and type (paid only; skip rows with unknown refund).
