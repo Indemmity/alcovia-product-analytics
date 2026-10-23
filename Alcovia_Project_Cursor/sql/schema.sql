@@ -1,6 +1,7 @@
--- Proposed PostgreSQL schema for the Alcovia assessment prototype.
--- Illustrative only. Not connected to production. Review with the engineering owner before use.
--- Sample CSVs in ../data map to these tables. Fictional records only.
+-- Proposed PostgreSQL schema for the Alcovia assessment prototype, mapped to requirements in the written assessment brief.
+-- Illustrative only; not connected to production. Review with the engineering owner before use.
+-- Sample CSVs in ../data contain synthetic demonstration records, not Alcovia exports.
+-- Brief-provided baseline observations are context and are not represented as source rows in these tables.
 
 CREATE TABLE students (
   student_id TEXT PRIMARY KEY,
