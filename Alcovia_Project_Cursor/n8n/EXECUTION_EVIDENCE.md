@@ -2,8 +2,6 @@
 
 **Assessment mapping:** These manual demos illustrate two requested operational needs: distinguishing eligible paid rows for revenue reporting and identifying upcoming trial renewals. The input records are synthetic and are not evidence of live Alcovia transactions or enrollments.
 
-**Assessment mapping:** These manual demos illustrate two requested operational needs: distinguishing eligible paid rows for revenue reporting and identifying upcoming trial renewals. The input records are synthetic and are not evidence of live Alcovia transactions or enrollments.
-
 **Test date:** 2026-10-23  
 **Environment:** n8n Cloud  
 **Data:** Fictional sample records only  
@@ -36,6 +34,6 @@ Observed in n8n Cloud:
 
 ## Evidence and limitations
 
-Execution screenshots were captured during testing and can be supplied with the assessment. This Markdown record summarizes the outputs observed in n8n Cloud; it is not a raw n8n execution export.
+The six screenshots of the n8n workflow canvases and node outputs are included in the [evidence folder](./evidence/README.md). This Markdown record summarizes the outputs observed in n8n Cloud; it is not a raw n8n execution export.
 
 The workflows use fixed fictional sample data and a fixed as-of date. They do not connect to live Alcovia systems, send emails, create CRM tasks, or persist audit logs. Do not treat them as production-ready automations.
