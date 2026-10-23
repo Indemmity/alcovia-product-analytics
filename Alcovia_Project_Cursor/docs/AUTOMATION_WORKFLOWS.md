@@ -1,7 +1,10 @@
-# Automation Workflows · Alcovia Assessment
+# Automation Workflow Specifications — Alcovia Assessment
 
 ## Overview
-This document specifies proposed automation workflows for the Alcovia student success platform. The prototype uses fictional CSV data and dashboard indicators only; live notifications, task creation, database updates, and scheduled execution require a production integration (for example, n8n), credentials, and testing.
+
+This document describes eight automation ideas that could reduce manual follow-up and help teams spot issues earlier. They cover student milestones, advisor inputs, trial renewals, chapter readiness, study habits, wellness check-ins, campaign performance, and data quality.
+
+These are proposed workflows, not live Alcovia automations. The prototype uses fictional CSV data and dashboard indicators. It does not send emails, create tasks, run scheduled jobs, or update external systems. The two n8n files in this repository are separate manual demos and do not implement all eight workflows.
 
 **Date handling:** Use the prototype's fixed reference date, `AS_OF_DATE = 2026-10-22`, for reproducible date-based examples. In production, use a configured business timezone and the current date/time.
 
@@ -267,13 +270,8 @@ Illustrative example only: Campaign CAM-005 (Email nurture) records 3 attributed
 4. Block automation workflows if critical data gaps detected
 
 ### Sample Output (Prototype)
-```
-Illustrative output format only — not a claim that validation has been run:
-Validation passed: [row counts by dataset]
-Referential checks: [pass/fail summary]
 
-Replace these placeholders with the actual output from `validate_sample_data.py` before reporting a validation result.
-```
+The Python validator checks the defined sample-data rules and relationships. Its current results should be taken from a fresh run of `python scripts/validate_sample_data.py`, rather than copied into this workflow specification. This document describes the proposed alert format; it is not itself evidence of a live scheduled validation workflow.
 
 ### Implementation
 - **Tool:** Python script + cron job
