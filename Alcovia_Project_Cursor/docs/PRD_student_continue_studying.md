@@ -4,7 +4,7 @@
 **Status:** Proposed PRD for assessment  
 **Owner:** Product, Systems & Analytics Lead (proposed)  
 **Scope:** Student Home experience  
-**Data and evidence note:** This PRD is based on the written assessment brief and the prototype built to address it. The brief reports average app usage of about 2.15 minutes against a 30-minute aspiration, alongside a small active base and low use of several study features. These are assessment-provided observations, not independently verified live analytics. The student-level CSVs and prototype scenarios are synthetic; success measures and hypotheses must be validated with real users and approved product data.
+**Data and evidence note:** This PRD is based on the written assessment brief and the prototype built to address it. 
 
 ## 1. Context and problem
 
