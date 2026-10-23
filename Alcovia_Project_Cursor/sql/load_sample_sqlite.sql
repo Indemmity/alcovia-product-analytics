@@ -1,6 +1,7 @@
--- SQLite loader for local checks. Paths assume this file is run from the project root:
+-- SQLite loader for local checks of the assessment prototype. Requirements are based on Alcovia's written brief.
+-- Paths assume this file is run from the project root:
 -- sqlite3 alcovia_sample.db ".read sql/load_sample_sqlite.sql"
--- All data is fictional.
+-- Imported CSV rows are synthetic demonstration records, not Alcovia operational exports.
 --
 -- NOTE: .import --skip 1 requires SQLite 3.37.0 (2021-11-27) or later.
 -- Check your version with: sqlite3 --version
