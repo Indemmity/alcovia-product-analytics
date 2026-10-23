@@ -2,6 +2,8 @@
 
 **Assessment mapping:** These manual demos illustrate two requested operational needs: distinguishing eligible paid rows for revenue reporting and identifying upcoming trial renewals. The input records are synthetic and are not evidence of live Alcovia transactions or enrollments.
 
+**Assessment mapping:** These manual demos illustrate two requested operational needs: distinguishing eligible paid rows for revenue reporting and identifying upcoming trial renewals. The input records are synthetic and are not evidence of live Alcovia transactions or enrollments.
+
 **Test date:** 2026-10-23  
 **Environment:** n8n Cloud  
 **Data:** Fictional sample records only  
