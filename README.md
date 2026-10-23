@@ -14,7 +14,6 @@ This repository demonstrates my approach to improving student engagement and pro
 - [SQL schema](Alcovia_Project_Cursor/sql/schema.sql) · [KPI queries](Alcovia_Project_Cursor/sql/metrics.sql)
 - [n8n workflow exports](Alcovia_Project_Cursor/n8n/) · [manual execution evidence](Alcovia_Project_Cursor/n8n/EXECUTION_EVIDENCE.md)
 - [Assignment coverage and validation notes](Alcovia_Project_Cursor/ASSIGNMENT_COVERAGE.md)
-- [Final verification report](Alcovia_Project_Cursor/FINAL_REPORT.md)
 
 If a published dashboard does not load, use the local run instructions below.
 
@@ -24,7 +23,7 @@ If a published dashboard does not load, use the local run instructions below.
 2. Read the [Executive Summary & Strategy](Alcovia_Project_Cursor/docs/EXECUTIVE_SUMMARY_STRATEGY.md) and [Continue Studying PRD](Alcovia_Project_Cursor/docs/PRD_student_continue_studying.md) to understand prioritisation, resource allocation, delivery timeboxing, product hypothesis, requirements, and success measures.
 3. Review [metric definitions](Alcovia_Project_Cursor/docs/METRIC_DEFINITIONS.md), the [SQL schema](Alcovia_Project_Cursor/sql/schema.sql), and [KPI queries](Alcovia_Project_Cursor/sql/metrics.sql).
 4. Inspect the [n8n workflow exports](Alcovia_Project_Cursor/n8n/) and [execution evidence](Alcovia_Project_Cursor/n8n/EXECUTION_EVIDENCE.md).
-5. Use the [assignment coverage notes](Alcovia_Project_Cursor/ASSIGNMENT_COVERAGE.md) and [final verification report](Alcovia_Project_Cursor/FINAL_REPORT.md) to review what was checked and what remains out of scope.
+5. Use the [assignment coverage notes](Alcovia_Project_Cursor/ASSIGNMENT_COVERAGE.md) to review what was checked and what remains out of scope.
 
 ## What the prototype covers
 
@@ -52,12 +51,8 @@ All project files are organised under [`Alcovia_Project_Cursor/`](Alcovia_Projec
 
 ### Product, strategy and delivery documentation
 - [Executive Summary & Strategy](Alcovia_Project_Cursor/docs/EXECUTIVE_SUMMARY_STRATEGY.md)
-- [Executive write-up and eight-week plan](Alcovia_Project_Cursor/docs/executive_writeup.md)
 - [Continue Studying PRD](Alcovia_Project_Cursor/docs/PRD_student_continue_studying.md)
 - [Assignment coverage and validation notes](Alcovia_Project_Cursor/ASSIGNMENT_COVERAGE.md)
-- [Final verification report](Alcovia_Project_Cursor/FINAL_REPORT.md)
-- [Submission checklist](Alcovia_Project_Cursor/SUBMISSION_CHECKLIST.md)
-- [Power BI Desktop guide](Alcovia_Project_Cursor/POWERBI_GUIDE.md)
 
 ### Analytics, SQL and metrics
 - [PostgreSQL database schema](Alcovia_Project_Cursor/sql/schema.sql)
@@ -100,10 +95,7 @@ All project files are organised under [`Alcovia_Project_Cursor/`](Alcovia_Projec
 - [Wellness tracking (fictional/optional)](Alcovia_Project_Cursor/data/wellness_tracking.csv)
 - [All sample data files](Alcovia_Project_Cursor/data/)
 
-### Supporting materials and repository setup
-- [Supporting folder](Alcovia_Project_Cursor/supporting/)
-- [Executive write-up DOCX](Alcovia_Project_Cursor/supporting/Alcovia_Executive_Writeup_Final_Day_Plan.docx)
-- [Power BI starter workbook](Alcovia_Project_Cursor/supporting/Alcovia_GTM_PowerBI_Starter.xlsx)
+### Repository setup
 - [Project .gitignore](Alcovia_Project_Cursor/.gitignore)
 - [Repository homepage](index.html)
 
