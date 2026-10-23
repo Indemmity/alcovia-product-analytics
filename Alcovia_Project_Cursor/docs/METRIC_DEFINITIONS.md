@@ -1,6 +1,6 @@
 # Data dictionary and KPI definitions
 
-**All records are fictional.** They exist so the assessment dashboards, SQL and validation script can be checked. They are not Alcovia business or student performance.
+**Data provenance:** KPI choices and dashboard requirements are mapped to Alcovia's written assessment brief. All row-level CSV records are synthetic demonstration data used to test the dashboards, SQL and validation script; they are not Alcovia's actual business or student records. Values explicitly stated in the brief (for example, the 2.15-minute average app usage and 30-minute aspiration) are contextual observations from the brief, not values calculated from these CSVs. Do not mix those source-provided observations with synthetic sample metrics without labelling their provenance.
 
 Demo as-of date used by the dashboards: **2026-10-22**.
 
