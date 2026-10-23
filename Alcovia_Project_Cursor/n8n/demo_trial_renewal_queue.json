@@ -3,13 +3,13 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "7a236294-c230-4383-3077-72635f600007",
+      "id": "e00a53f9-1ee1-4349-ae2f-49804cf0559d",
       "name": "When clicking Test workflow",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        240,
-        300
+        0,
+        112
       ]
     },
     {
@@ -38,13 +38,13 @@
         },
         "options": {}
       },
-      "id": "8b3473a5-d341-4494-4188-837460710008",
+      "id": "4821df12-813f-47ce-8cdf-a5bd45c69229",
       "name": "Load fictional enrollments",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        500,
-        300
+        272,
+        112
       ]
     },
     {
@@ -52,13 +52,13 @@
         "fieldToSplitOut": "enrollments",
         "options": {}
       },
-      "id": "9c4584b6-e452-45a5-5299-948571820009",
+      "id": "3eae720c-dd64-4b03-954a-df791c34dd29",
       "name": "Split enrollments",
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        740,
-        300
+        512,
+        112
       ]
     },
     {
@@ -67,7 +67,8 @@
           "options": {
             "caseSensitive": true,
             "leftValue": "",
-            "typeValidation": "loose"
+            "typeValidation": "loose",
+            "version": 1
           },
           "conditions": [
             {
@@ -111,13 +112,13 @@
         },
         "options": {}
       },
-      "id": "0d5695c7-f563-46b6-63aa-a59682930010",
+      "id": "ae21a006-b7b1-470f-9d12-d2d33649eda3",
       "name": "Active trial due within 21 days?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        980,
-        300
+        752,
+        112
       ]
     },
     {
@@ -164,27 +165,28 @@
         },
         "options": {}
       },
-      "id": "1e6706d8-0674-47c7-74bb-b6a793a40011",
+      "id": "d1486414-f55b-4fed-ab19-55b9b357a405",
       "name": "Queue draft reminder",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1240,
-        200
+        1008,
+        0
       ]
     },
     {
       "parameters": {},
-      "id": "2f7817e9-1785-48d8-85cc-c7b8a4b50012",
+      "id": "b1e27c20-d8b2-41f3-b129-49b43321e3e7",
       "name": "Skip non-trial",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1240,
-        400
+        1008,
+        208
       ]
     }
   ],
+  "pinData": {},
   "connections": {
     "When clicking Test workflow": {
       "main": [
@@ -212,14 +214,14 @@
       "main": [
         [
           {
-            "node": "Is trial enrollment?",
+            "node": "Active trial due within 21 days?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Is trial enrollment?": {
+    "Active trial due within 21 days?": {
       "main": [
         [
           {
@@ -238,13 +240,16 @@
       ]
     }
   },
+  "active": false,
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "binaryMode": "separate"
   },
-  "staticData": null,
+  "versionId": "d2bf2e91-afdf-422c-933a-01c08e38bc83",
   "meta": {
-    "templateCredsSetupCompleted": true
+    "instanceId": "ba9a6ea4ba851dcbe700d29a5ec2b63209c48909a7041970056e78e62741a56b"
   },
-  "pinData": {},
+  "nodeGroups": [],
+  "id": "ptf3VtfA4AIIls7K",
   "tags": []
 }
