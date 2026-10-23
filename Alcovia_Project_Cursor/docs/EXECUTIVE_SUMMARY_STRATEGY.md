@@ -3,7 +3,7 @@
 **Role:** Product, Systems & Analytics Lead  
 **Purpose:** Concise summary of my problem-solving approach, resource allocation, and proposed eight-week delivery plan.
 
-> **Scope note:** I did not have access to Alcovia’s live systems or business data. The dashboards and examples in this submission use fictional sample records and demonstrate a proposed approach, not a live implementation.
+> **Data and scope:** This solution is based on Alcovia's written assessment brief, including its stated app-adoption observations, existing-tool context, GTM requirements, student-progress process, and delivery expectations. The brief-provided observations are treated as context for prioritisation, not as independently verified live data. The dashboard CSVs contain synthetic records used to demonstrate calculations and workflows because no raw operational exports or live-system access were provided. The prototype is not a live implementation.
 
 ## 1. My approach
 
@@ -54,7 +54,7 @@ I would establish a baseline and agree on definitions before setting numeric tar
 
 ## 5. Deliverables and limitations
 
-The repository contains interactive HTML dashboard prototypes, fictional CSV data, SQL schema and metric queries, metric definitions, a Python sample-data validator, a student Continue Studying PRD, automation specifications, and two manual n8n demo workflows. These materials show how I would structure the problem and validate selected scenarios.
+The repository contains interactive HTML dashboard prototypes, synthetic CSV data mapped to the assessment requirements, SQL schema and metric queries, metric definitions, a Python sample-data validator, a student Continue Studying PRD, automation specifications, and two manual n8n demo workflows. These materials show how I would structure the problem and validate selected scenarios.
 
 The prototype is not connected to Alcovia’s production systems. It has no production database, authentication or role-based access; the student dashboard must not be used with real student records as currently built. The SQL files are reference material, the automation specifications are proposals, and no live emails, CRM updates or published Power BI Service report are claimed.
 
