@@ -1,8 +1,8 @@
 # Alcovia — Product, Systems & Analytics Lead Assessment
 
-This repository demonstrates my approach to improving student engagement and progress visibility, and bringing greater clarity to growth, revenue, and operational follow-up. It includes interactive dashboard prototypes, fictional sample data, SQL reference files, metric definitions, validation checks, and n8n workflow demonstrations.
+This repository translates Alcovia's assessment brief into a proposed product, analytics, and systems solution. The dashboards and supporting files address the stated challenges around student app adoption, student progress, GTM and revenue visibility, operational follow-up, and reliable delivery.
 
-> **Scope note:** I did not have access to Alcovia's live systems or business data. All records and dashboard figures are fictional and demonstrate proposed logic only.
+> **Data and scope:** The requirements and proposed solution are based on the assessment brief. The brief includes a small set of stated baseline observations (such as app usage and recent student activity), and explicitly requests dummy values for the GTM dashboard. Because no underlying operational exports or live-system access were provided, the CSV datasets and populated dashboard scenarios are synthetic demonstration data unless a value is explicitly identified as coming from the brief. Synthetic figures are not claims about Alcovia's actual performance. The prototype uses static CSVs and does not connect to Alcovia's live systems.
 
 ## Key priorities
 
@@ -11,7 +11,7 @@ This repository demonstrates my approach to improving student engagement and pro
 - **Strengthen operational follow-up:** Surface missing advisor inputs, overdue milestones, and data-quality issues before they become larger problems.
 - **Build toward reliable decision-making:** Establish clear KPI definitions, validate source data, and introduce appropriate access controls before moving from prototype to production.
 
-These are proposed priorities based on the assessment scope and fictional sample data, not conclusions verified against Alcovia's live business performance.
+These priorities map to the problems and requested outcomes in the assessment brief. They are proposed areas of focus, not findings verified against Alcovia's live operational data.
 
 ## Quick links
 
