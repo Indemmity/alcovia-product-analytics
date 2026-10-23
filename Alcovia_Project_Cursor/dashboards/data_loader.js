@@ -1,6 +1,7 @@
 /**
  * Shared CSV loader for the static Alcovia assessment dashboards.
- * Fictional sample data only. Requires HTTP (not file://) so fetch can read ../data/*.csv
+ * Dashboard requirements map to the written assessment brief; loaded CSV rows are synthetic demo data, not Alcovia exports.
+ * Requires HTTP (not file://) so fetch can read ../data/*.csv
  */
 (function (global) {
   const AS_OF_DATE = "2026-10-22";
