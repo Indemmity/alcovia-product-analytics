@@ -1,5 +1,7 @@
 # n8n automation materials
 
+These workflow demos are scoped to needs raised in Alcovia's written assessment brief, including payment eligibility for revenue reporting and follow-up for upcoming three-month trial renewals. The workflow inputs are synthetic demonstration records, not Alcovia exports.
+
 These files are **demonstration designs**. They are not connected to Alcovia, ClickUp, Meta Ads, Razorpay, email, or any live student system.
 
 ## What you can import
