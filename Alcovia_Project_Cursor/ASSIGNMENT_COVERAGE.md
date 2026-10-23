@@ -4,9 +4,9 @@
 
 ## Purpose
 
-This document summarises the assignment requirements covered by the Alcovia prototype, the validation performed using fictional sample data, and the work required before production use.
+This document maps Alcovia's written assessment requirements to the prototype, records checks performed with synthetic sample data, and identifies work required before production use. The brief itself supplies the problem statements, current-tool context, baseline app-usage observations, requested GTM measures, student-progress requirements, and delivery-planning task. The row-level CSVs are synthetic; they are not raw Alcovia exports.
 
-The prototype brings student progress, chapter readiness, personal development, study habits, advisor follow-ups, and go-to-market metrics into one place. It is designed to help the team identify where students may need support while tracking acquisition, conversion, and revenue performance.
+The prototype responds to the brief by bringing student progress, chapter readiness, personal development, study habits, advisor follow-ups, and go-to-market metrics into one place. It is designed to help the team identify where students may need support while tracking acquisition, conversion, and revenue performance.
 
 ## Implementation and validation
 
