@@ -43,6 +43,8 @@ Trigger: after an approved input window.
 - Student data requires consent and access control; this repo contains only fictional IDs.
 
 
+For observed manual execution results, see [EXECUTION_EVIDENCE.md](./EXECUTION_EVIDENCE.md).
+
 ## Manual execution test record
 
 Tested manually in n8n Cloud on **2026-10-23** using the fictional sample records in these exported workflows. These results confirm the imported demo workflows executed; they do not establish production readiness.
