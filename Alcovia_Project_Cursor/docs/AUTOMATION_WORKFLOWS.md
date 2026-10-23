@@ -2,13 +2,12 @@
 
 ## Overview
 
-This document describes eight automation ideas that could reduce manual follow-up and help teams spot issues earlier. They cover student milestones, advisor inputs, trial renewals, chapter readiness, study habits, wellness check-ins, campaign performance, and data quality.
+This document translates the assessment brief's needs around student progress, advisor inputs, trial renewals, chapter readiness, study habits, optional wellness, campaign performance, and data quality into eight proposed automation ideas. These are design proposals based on the written brief, not confirmed descriptions of Alcovia's current production workflows.
 
 These are proposed workflows, not live Alcovia automations. The prototype uses fictional CSV data and dashboard indicators. It does not send emails, create tasks, run scheduled jobs, or update external systems. The two n8n files in this repository are separate manual demos and do not implement all eight workflows.
 
 **Date handling:** Use the prototype's fixed reference date, `AS_OF_DATE = 2026-10-22`, for reproducible date-based examples. In production, use a configured business timezone and the current date/time.
 
-**Note:** This is a fictional assessment prototype. All automation descriptions are for demonstration purposes only.
 
 ---
 
