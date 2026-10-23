@@ -1,6 +1,6 @@
 # n8n Execution Evidence
 
-This folder contains screenshots captured from manual test executions of the fictional-data Alcovia demo workflows in n8n Cloud.
+The workflows correspond to operational scenarios raised in Alcovia's written assessment brief. This folder contains screenshots captured from manual test executions using synthetic payment and enrolment records in n8n Cloud; the screenshots do not represent live Alcovia transactions.
 
 ## Screenshots
 
