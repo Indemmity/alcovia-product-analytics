@@ -39,7 +39,7 @@ The repository documents workflow concepts for overdue milestones, missing advis
 
 A consistent design rule is that **missing data should not silently become zero**. The prototype distinguishes unavailable values from genuine zeros or failed thresholds where specified.
 
-## Repository contents — clickable file index
+## Repository contents 
 
 All project files are organised under [`Alcovia_Project_Cursor/`](Alcovia_Project_Cursor/). Select any file or folder below to open it in GitHub.
 
